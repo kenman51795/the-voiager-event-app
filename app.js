@@ -1,1 +1,1 @@
-// Full game logic goes here
+// Full app logic will be restored here
