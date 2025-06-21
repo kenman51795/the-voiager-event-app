@@ -34,7 +34,7 @@ let cardList = getCardList(currentPhase);
 
 function showNextCard() {
   if (currentPhase === "final") {
-    card.src = "assets/base-game/final.jpg";
+    card.src = "assets/base-game/final.png";
     return;
   }
   if (cardList.length === 0) {
@@ -61,13 +61,39 @@ selector.addEventListener("change", (e) => {
 card.addEventListener("click", showNextCard);
 card.addEventListener("touchend", showNextCard);
 
+const timerDisplay = document.getElementById("timer-display");
+let countdown = 5 * 60; // 5 minutes in seconds
+let timerInterval;
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(countdown / 60);
+  const seconds = countdown % 60;
+  timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
 timerToggle.addEventListener("click", () => {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerDisplay.textContent = "";
     timerToggle.textContent = "⏱";
   } else {
-    timer = setInterval(showNextCard, 5 * 60 * 1000);
+    countdown = 5 * 60;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerDisplay.textContent = "✔";
+        setTimeout(() => {
+          timerDisplay.textContent = "";
+          timerToggle.textContent = "⏱";
+        }, 3000); // reset after 3 sec
+      } else {
+        updateTimerDisplay();
+      }
+    }, 1000);
     timerToggle.textContent = "🕒";
   }
 });
