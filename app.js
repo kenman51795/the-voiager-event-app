@@ -9,9 +9,9 @@ let cardIndex = 0;
 let timer;
 
 const TOTAL_CARDS = {
-  phase1: 99,
-  phase2: 99,
-  phase3: 100
+  phase1: 65,
+  phase2: 65,
+  phase3: 65
 };
 
 function shuffle(arr) {
@@ -23,9 +23,9 @@ function shuffle(arr) {
 }
 
 function getCardList(phase) {
-  if (phase === "final") return ["assets/base-game/final.jpg"];
+  if (phase === "final") return ["assets/base-game/final.png"];
   const cards = Array.from({ length: TOTAL_CARDS[phase] }, (_, i) =>
-    `assets/base-game/${phase}/card${i + 1}.jpg`
+  `assets/base-game/${phase}/card${i + 1}.png`
   );
   return shuffle(cards.filter(c => !viewedCards[phase].includes(c)));
 }
