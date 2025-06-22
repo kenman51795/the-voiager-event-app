@@ -71,6 +71,16 @@ function updateTimerDisplay() {
   timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+const timerDisplay = document.getElementById("timer-display");
+let countdown = 5 * 60;
+let timerInterval;
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(countdown / 60);
+  const seconds = countdown % 60;
+  timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
 timerToggle.addEventListener("click", () => {
   if (timerInterval) {
     clearInterval(timerInterval);
@@ -97,6 +107,5 @@ timerToggle.addEventListener("click", () => {
     timerToggle.textContent = "🕒";
   }
 });
-
 
 changePhase("phase1");
