@@ -62,7 +62,7 @@ card.addEventListener("click", showNextCard);
 card.addEventListener("touchend", showNextCard);
 
 const timerDisplay = document.getElementById("timer-display");
-let countdown = 5 * 60; // 5 minutes in seconds
+let countdown = 5 * 60;
 let timerInterval;
 
 function updateTimerDisplay() {
@@ -89,7 +89,7 @@ timerToggle.addEventListener("click", () => {
         setTimeout(() => {
           timerDisplay.textContent = "";
           timerToggle.textContent = "⏱";
-        }, 3000); // reset after 3 sec
+        }, 3000);
       } else {
         updateTimerDisplay();
       }
@@ -97,5 +97,6 @@ timerToggle.addEventListener("click", () => {
     timerToggle.textContent = "🕒";
   }
 });
+
 
 changePhase("phase1");
