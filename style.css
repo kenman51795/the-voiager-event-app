@@ -15,7 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* keeps full height but allows scrolling */
+  min-height: 100vh;
 }
 
 #header {
@@ -54,10 +54,18 @@ body::before {
 
 /* Mobile override */
 @media (max-width: 768px) {
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain; /* allows pull-to-refresh but prevents white scroll at bottom */
+    touch-action: manipulation;
+  }
+
   body {
     background-image: url("assets/background-mobile.png");
     background-size: cover;
     background-position: center top;
+    min-height: 100vh;
   }
 }
 
