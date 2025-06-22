@@ -3,7 +3,6 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: Bookman, serif;
-  overscroll-behavior-y: none; /* prevents bottom bounce */
   touch-action: manipulation;
   overflow-x: hidden;
 }
@@ -16,9 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto; /* allow vertical pull-to-refresh */
+  min-height: 100vh; /* keeps full height but allows scrolling */
 }
 
 #header {
@@ -46,7 +43,7 @@ body {
   transition: transform 0.4s ease-in-out;
 }
 
-/* Overlay for visual clarity */
+/* Overlay */
 body::before {
   content: "";
   position: fixed;
@@ -55,7 +52,7 @@ body::before {
   z-index: -1;
 }
 
-/* Mobile background */
+/* Mobile override */
 @media (max-width: 768px) {
   body {
     background-image: url("assets/background-mobile.png");
@@ -70,7 +67,7 @@ body::before {
   bottom: 10px;
   right: 10px;
   font-size: 0.85em;
-  color: rgb(59, 85, 73); /* Voiager Green */
+  color: rgb(59, 85, 73);
   text-decoration: none;
   opacity: 0.8;
   z-index: 10;
