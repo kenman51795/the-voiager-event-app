@@ -43,8 +43,18 @@ body {
     background-image: url("assets/background-mobile.png");
     background-size: cover;
     background-position: center top;
-    height: 100vh;
-  overflow: hidden;
+html, body {
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  margin: 0;
+  padding: 0;
+}
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   }
 }
 
