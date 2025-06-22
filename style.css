@@ -33,6 +33,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 0; /* Prevent overflow on mobile */
 }
 
 #card {
@@ -57,7 +58,7 @@ body::before {
   html, body {
     height: 100%;
     overflow-x: hidden;
-    overscroll-behavior-y: contain; /* allows pull-to-refresh but prevents white scroll at bottom */
+    overscroll-behavior-y: contain;
     touch-action: manipulation;
   }
 
@@ -65,7 +66,12 @@ body::before {
     background-image: url("assets/background-mobile.png");
     background-size: cover;
     background-position: center top;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow-y: hidden;
   }
 }
 
