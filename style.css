@@ -43,6 +43,8 @@ body {
     background-image: url("assets/background-mobile.png");
     background-size: cover;
     background-position: center top;
+    height: 100vh;
+  overflow: hidden;
   }
 }
 
