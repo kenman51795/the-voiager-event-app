@@ -5,6 +5,7 @@ const timerDisplay = document.getElementById("timer-display");
 
 let currentPhase = "phase1";
 let viewedCards = { phase1: [], phase2: [], phase3: [] };
+let cardList = [];
 let timerInterval;
 let countdown = 5 * 60;
 
@@ -29,8 +30,6 @@ function getCardList(phase) {
   );
   return shuffle(cards.filter(c => !viewedCards[phase].includes(c)));
 }
-
-let cardList = getCardList(currentPhase);
 
 function showNextCard() {
   if (currentPhase === "final") {
@@ -67,7 +66,6 @@ timerToggle.addEventListener("click", () => {
     clearInterval(timerInterval);
     timerInterval = null;
     timerDisplay.textContent = "";
-    timerToggle.textContent = "⏱";
   } else {
     countdown = 5 * 60;
     updateTimerDisplay();
@@ -79,13 +77,11 @@ timerToggle.addEventListener("click", () => {
         timerDisplay.textContent = "✔";
         setTimeout(() => {
           timerDisplay.textContent = "";
-          timerToggle.textContent = "⏱";
         }, 3000);
       } else {
         updateTimerDisplay();
       }
     }, 1000);
-    timerToggle.textContent = "🕒";
   }
 });
 
