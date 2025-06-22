@@ -6,8 +6,8 @@ const timerDisplay = document.getElementById("timer-display");
 let currentPhase = "phase1";
 let viewedCards = { phase1: [], phase2: [], phase3: [] };
 let cardList = [];
-let timerInterval;
-let countdown = 5 * 60;
+let timerInterval = null;
+let countdown = 300;
 
 const TOTAL_CARDS = {
   phase1: 65,
@@ -61,27 +61,32 @@ function updateTimerDisplay() {
   timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+function startTimer() {
+  countdown = 300; // 5 minutes
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    countdown--;
+    if (countdown <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerDisplay.textContent = "✔";
+      setTimeout(() => {
+        timerDisplay.textContent = "";
+      }, 3000);
+    } else {
+      updateTimerDisplay();
+    }
+  }, 1000);
+}
+
 timerToggle.addEventListener("click", () => {
   if (timerInterval) {
     clearInterval(timerInterval);
     timerInterval = null;
     timerDisplay.textContent = "";
   } else {
-    countdown = 5 * 60;
-    updateTimerDisplay();
-    timerInterval = setInterval(() => {
-      countdown--;
-      if (countdown <= 0) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        timerDisplay.textContent = "✔";
-        setTimeout(() => {
-          timerDisplay.textContent = "";
-        }, 3000);
-      } else {
-        updateTimerDisplay();
-      }
-    }, 1000);
+    startTimer();
   }
 });
 
