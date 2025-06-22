@@ -1,3 +1,4 @@
+/* Global & Mobile Scroll Behavior */
 html, body {
   margin: 0;
   padding: 0;
@@ -5,10 +6,12 @@ html, body {
   font-family: Bookman, serif;
   touch-action: manipulation;
   overflow-x: hidden;
-  overscroll-behavior-y: contain; /* ✅ allow pull-to-refresh, prevent white bounce */
+  overscroll-behavior-y: contain; /* ✅ allows pull-to-refresh at top */
   -webkit-overflow-scrolling: touch;
+  background-color: #3b5549; /* ✅ matches background to prevent white flash */
 }
 
+/* Desktop + mobile-safe full height */
 body {
   background-image: url("assets/background-desktop.png");
   background-size: cover;
@@ -18,9 +21,17 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  overflow-y: auto; /* ✅ allows scrolling for pull-to-refresh without white bounce */
+  overflow-y: auto; /* ✅ allows top bounce but prevents white gap at bottom */
 }
 
+/* iOS Safari: prevent bottom white on overscroll */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background-color: #3b5549;
+  }
+}
+
+/* Header */
 #header {
   display: flex;
   justify-content: space-between;
@@ -30,6 +41,7 @@ body {
   margin: 10px;
 }
 
+/* Card Container */
 #card-container {
   flex: 1;
   width: 100%;
@@ -39,6 +51,7 @@ body {
   min-height: 0;
 }
 
+/* Card Styling */
 #card {
   max-width: 90%;
   max-height: 80vh;
@@ -47,7 +60,7 @@ body {
   transition: transform 0.4s ease-in-out;
 }
 
-/* Overlay */
+/* Dark Overlay */
 body::before {
   content: "";
   position: fixed;
@@ -56,7 +69,7 @@ body::before {
   z-index: -1;
 }
 
-/* Mobile override */
+/* Mobile Overrides */
 @media (max-width: 768px) {
   body {
     background-image: url("assets/background-mobile.png");
@@ -65,7 +78,7 @@ body::before {
   }
 }
 
-/* Footer link */
+/* Footer Link */
 #footer-link {
   position: fixed;
   bottom: 10px;
