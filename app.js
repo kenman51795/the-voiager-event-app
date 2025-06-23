@@ -12,14 +12,14 @@ const urlParams = new URLSearchParams(window.location.search);
 const deck = urlParams.get("deck") || "the-voiager";
 
 const uiColorMap = {
-  "the-voiager":    "#E6CDB8",
-  "departure":      "#B1B1B1",
-  "eternal-flame":  "#F2C572",
-  "curious-hearts": "#CEC0E2",
-  "inner-circle":   "#C8D7E1",
-  "family-ties":    "#F6E3C5",
-  "family-legacy":  "#E5CDB3",
-  "solitaire":      "#D9C7B3"
+  "the-voiager":    "#3b5549",
+  "departure":      "#444444",
+  "eternal-flame":  "#8b2e1d",
+  "curious-hearts": "#aa6c9c",
+  "inner-circle":   "#3c5d87",
+  "family-ties":    "#c77e2a",
+  "family-legacy":  "#a46b38",
+  "solitaire":      "#5c3d6b"
 };
 
 const deckConfig = {
@@ -43,6 +43,7 @@ let cardList = [];
 let historyStack = [];
 let timerInterval = null;
 let countdown = 240;
+let tapLocked = false;
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -165,7 +166,12 @@ backBtn?.addEventListener("click", () => {
 
 prevCardButton?.addEventListener("click", showPreviousCard);
 card?.addEventListener("click", showNextCard);
-card?.addEventListener("touchend", showNextCard);
+card?.addEventListener("touchend", (e) => {
+  if (tapLocked) return;
+  tapLocked = true;
+  showNextCard();
+  setTimeout(() => (tapLocked = false), 300); // debounce
+});
 
 function init() {
   const setup = getDeckSetup(deck);
@@ -178,20 +184,18 @@ function init() {
     selector.appendChild(opt);
   });
 
-  // Get color from theme map
-  const color = uiColorMap[deck] || "#ffffff";
+  // Get button color for this deck
+  const iconColor = uiColorMap[deck] || "#ffffff";
 
-  // Apply text/icon color across UI elements
-  selector.style.color = color;
-  timerDisplay.style.color = color;
-  cardCounter.style.color = color;
+  // Apply icon color to buttons and UI
+  selector.style.color = iconColor;
+  timerDisplay.style.color = iconColor;
+  cardCounter.style.color = iconColor;
 
-  // Apply icon color to all button controls
   [resetBtn, shuffleBtn, timerToggle, prevCardButton, backBtn].forEach(btn => {
-    if (btn) btn.style.color = color;
+    if (btn) btn.style.color = iconColor;
   });
 
-  // Load first card
   selector.addEventListener("change", e => {
     changePhase(Number(e.target.value));
   });
