@@ -16,10 +16,12 @@ const deckConfig = {
     phases: ["Discovery", "Affinity", "Validity", "Final"],
     cardCounts: [65, 65, 65, 1]
   },
-  default: {
-    phases: ["Main", "Final"],
-    cardCounts: [51, 1]
-  }
+  "curious-hearts": { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "departure":       { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "eternal-flame":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "family-legacy":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "family-ties":     { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "inner-circle":    { phases: ["Main", "Final"], cardCounts: [52, 1] }
 };
 
 function getDeckSetup(deck) {
