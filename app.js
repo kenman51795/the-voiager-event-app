@@ -9,10 +9,10 @@ const backBtn = document.getElementById("back-button");
 const prevCardButton = document.getElementById("prev-card");
 
 const urlParams = new URLSearchParams(window.location.search);
-const deck = urlParams.get("deck") || "base";
+const deck = urlParams.get("deck") || "the-voiager";
 
 const deckConfig = {
-  base: {
+  "the-voiager": {
     phases: ["Discovery", "Affinity", "Validity", "Final"],
     cardCounts: [65, 65, 65, 1]
   },
@@ -22,16 +22,16 @@ const deckConfig = {
   }
 };
 
+function getDeckSetup(deck) {
+  return deckConfig[deck] || deckConfig.default;
+}
+
 let currentPhase = "";
 let viewedCards = {};
 let cardList = [];
 let historyStack = [];
 let timerInterval = null;
 let countdown = 240;
-
-function getDeckSetup(deck) {
-  return deck === "base" ? deckConfig.base : deckConfig.default;
-}
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -47,7 +47,7 @@ function getCardList(phaseIndex) {
   const total = setup.cardCounts[phaseIndex];
 
   if (phase === "final") {
-    return [`assets/${deck}/final.png`];
+    return [`assets/${deck}/final/final.png`];
   }
 
   const cards = Array.from({ length: total }, (_, i) =>
@@ -61,7 +61,7 @@ function showNextCard() {
   const phase = currentPhase.toLowerCase();
 
   if (phase === "final") {
-    card.src = `assets/${deck}/final.png`;
+    card.src = `assets/${deck}/final/final.png`;
     return;
   }
 
@@ -80,9 +80,10 @@ function showNextCard() {
 
 function showPreviousCard() {
   if (historyStack.length < 2) return;
-  historyStack.pop(); // Remove current
+  historyStack.pop(); // Remove current card
   const prev = historyStack[historyStack.length - 1];
   card.src = prev;
+  updateCounter();
 }
 
 function changePhase(index) {
