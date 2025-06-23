@@ -11,21 +11,30 @@ const prevCardButton = document.getElementById("prev-card");
 const urlParams = new URLSearchParams(window.location.search);
 const deck = urlParams.get("deck") || "the-voiager";
 
+const uiColorMap = {
+  "the-voiager":    "#E6CDB8",
+  "departure":      "#B1B1B1",
+  "eternal-flame":  "#F2C572",
+  "curious-hearts": "#CEC0E2",
+  "inner-circle":   "#C8D7E1",
+  "family-ties":    "#F6E3C5",
+  "family-legacy":  "#E5CDB3",
+  "solitaire":      "#D9C7B3"
+};
+
 const deckConfig = {
-  "the-voiager": {
-    phases: ["Discovery", "Affinity", "Validity", "Final"],
-    cardCounts: [65, 65, 65, 1]
-  },
-  "curious-hearts": { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "the-voiager":     { phases: ["Discovery", "Affinity", "Validity", "Final"], cardCounts: [65, 65, 65, 1] },
+  "curious-hearts":  { phases: ["Main", "Final"], cardCounts: [52, 1] },
   "departure":       { phases: ["Main", "Final"], cardCounts: [52, 1] },
   "eternal-flame":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
   "family-legacy":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
   "family-ties":     { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "inner-circle":    { phases: ["Main", "Final"], cardCounts: [52, 1] }
+  "inner-circle":    { phases: ["Main", "Final"], cardCounts: [52, 1] },
+  "solitaire":       { phases: ["Main", "Final"], cardCounts: [52, 1] }
 };
 
 function getDeckSetup(deck) {
-  return deckConfig[deck] || deckConfig.default;
+  return deckConfig[deck] || deckConfig["the-voiager"];
 }
 
 let currentPhase = "";
@@ -160,15 +169,33 @@ card?.addEventListener("touchend", showNextCard);
 
 function init() {
   const setup = getDeckSetup(deck);
+
+  // Populate phase selector
   setup.phases.forEach((phase, i) => {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = phase;
     selector.appendChild(opt);
   });
+
+  // Get color from theme map
+  const color = uiColorMap[deck] || "#ffffff";
+
+  // Apply text/icon color across UI elements
+  selector.style.color = color;
+  timerDisplay.style.color = color;
+  cardCounter.style.color = color;
+
+  // Apply icon color to all button controls
+  [resetBtn, shuffleBtn, timerToggle, prevCardButton, backBtn].forEach(btn => {
+    if (btn) btn.style.color = color;
+  });
+
+  // Load first card
   selector.addEventListener("change", e => {
     changePhase(Number(e.target.value));
   });
+
   changePhase(0);
 }
 

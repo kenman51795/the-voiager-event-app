@@ -2,11 +2,13 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  min-height: 100vh;
+  width: 100%;
   font-family: Bookman, serif;
   touch-action: manipulation;
   overflow-x: hidden;
-  overscroll-behavior-y: contain;
-  -webkit-overflow-scrolling: touch;
+  background-color: #000; /* fallback to avoid white flash */
+  -webkit-overflow-scrolling: touch; /* preserves pull-to-refresh */
 }
 
 body {
@@ -27,6 +29,7 @@ body::before {
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: -1;
+  pointer-events: none;
 }
 
 .home-screen {
@@ -66,14 +69,14 @@ body::before {
   opacity: 0.9;
 }
 
-.deck-button.the-voiager     { background-color: #3b5549; }
-.deck-button.departure       { background-color: #444444; }
-.deck-button.eternal-flame   { background-color: #8b2e1d; }
-.deck-button.curious-hearts  { background-color: #aa6c9c; }
-.deck-button.inner-circle    { background-color: #3c5d87; }
-.deck-button.family-ties     { background-color: #c77e2a; }
-.deck-button.family-legacy   { background-color: #a46b38; }
-.deck-button.solitaire       { background-color: #5c3d6b; }
+.deck-button.the-voiager     { background-color: #3b5549; color: #E6CDB8; }
+.deck-button.departure       { background-color: #444444; color: #B1B1B1; }
+.deck-button.eternal-flame   { background-color: #8b2e1d; color: #F2C572; }
+.deck-button.curious-hearts  { background-color: #aa6c9c; color: #CEC0E2; }
+.deck-button.inner-circle    { background-color: #3c5d87; color: #C8D7E1; }
+.deck-button.family-ties     { background-color: #c77e2a; color: #F6E3C5; }
+.deck-button.family-legacy   { background-color: #a46b38; color: #E5CDB3; }
+.deck-button.solitaire       { background-color: #5c3d6b; color: #D9C7B3; }
 
 #header {
   display: flex;
@@ -130,5 +133,8 @@ body::before {
   body {
     background-image: url("assets/background-mobile.png");
     background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
   }
 }
