@@ -1,4 +1,4 @@
-/* Global & Mobile Scroll Behavior */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -6,12 +6,10 @@ html, body {
   font-family: Bookman, serif;
   touch-action: manipulation;
   overflow-x: hidden;
-  overscroll-behavior-y: contain; /* ✅ allows pull-to-refresh at top */
+  overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
-  background-color: #3b5549; /* ✅ matches background to prevent white flash */
 }
 
-/* Desktop + mobile-safe full height */
 body {
   background-image: url("assets/background-desktop.png");
   background-size: cover;
@@ -21,27 +19,68 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  overflow-y: auto; /* ✅ allows top bounce but prevents white gap at bottom */
+  overflow-y: auto;
 }
 
-/* iOS Safari: prevent bottom white on overscroll */
-@supports (-webkit-touch-callout: none) {
-  body {
-    background-color: #3b5549;
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
 
-/* Header */
+.home-screen {
+  justify-content: center;
+}
+
+.title {
+  color: white;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.deck-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.deck-button {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.deck-button.base { background: #3b5549; }
+.deck-button.departure { background: #2b2b2b; }
+.deck-button.eternal { background: #802e2e; }
+.deck-button.curious { background: #8e448b; }
+.deck-button.inner { background: #3a4c76; }
+.deck-button.ties { background: #a85f3e; }
+.deck-button.legacy { background: #735a40; }
+.deck-button.solitaire { background: #52306e; }
+
 #header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 95%;
   max-width: 900px;
   margin: 10px;
+  gap: 10px;
 }
 
-/* Card Container */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 #card-container {
   flex: 1;
   width: 100%;
@@ -51,34 +90,15 @@ body {
   min-height: 0;
 }
 
-/* Card Styling */
 #card {
   max-width: 90%;
   max-height: 80vh;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.4s ease-in-out;
+  cursor: pointer;
 }
 
-/* Dark Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: -1;
-}
-
-/* Mobile Overrides */
-@media (max-width: 768px) {
-  body {
-    background-image: url("assets/background-mobile.png");
-    background-size: cover;
-    background-position: center top;
-  }
-}
-
-/* Footer Link */
 #footer-link {
   position: fixed;
   bottom: 10px;
@@ -94,4 +114,11 @@ body::before {
 #footer-link:hover {
   opacity: 1;
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: url("assets/background-mobile.png");
+    background-position: center top;
+  }
 }

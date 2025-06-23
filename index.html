@@ -1,27 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Voiager Event App</title>
+  <title>The Voiager</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-  <div id="header">
-    <select id="phase-selector">
-      <option value="phase1">Phase 1</option>
-      <option value="phase2">Phase 2</option>
-      <option value="phase3">Phase 3</option>
-      <option value="final">Final Card</option>
-    </select>
-    <button id="timer-toggle">
-      ⏱ <span id="timer-display" style="font-size: 0.7em; margin-left: 4px;"></span>
-    </button>
+<body class="home-screen">
+  <h1 class="title">The Voiager</h1>
+  <div class="deck-selection">
+    <button class="deck-button base" onclick="location.href='game.html?deck=base'">Base Game</button>
+    <button class="deck-button departure" onclick="location.href='game.html?deck=departure'">The Departure Deck</button>
+    <button class="deck-button eternal" onclick="location.href='game.html?deck=eternal'">The Eternal Flame Deck</button>
+    <button class="deck-button curious" onclick="location.href='game.html?deck=curious'">The Curious Hearts Deck</button>
+    <button class="deck-button inner" onclick="location.href='game.html?deck=inner'">The Inner Circle Deck</button>
+    <button class="deck-button ties" onclick="location.href='game.html?deck=ties'">The Family Ties Deck</button>
+    <button class="deck-button legacy" onclick="location.href='game.html?deck=legacy'">The Family Legacy Deck</button>
+    <button class="deck-button solitaire" onclick="location.href='game.html?deck=solitaire'">The Solitaire Deck</button>
   </div>
-  <div id="card-container">
-    <img id="card" src="" alt="Card"/>
-  </div>
-  <script src="app.js"></script>
-  <a id="footer-link" href="https://linktr.ee/thevoiager" target="_blank">@TheVoiager</a>
 </body>
 </html>
