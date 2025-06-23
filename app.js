@@ -43,7 +43,6 @@ let cardList = [];
 let historyStack = [];
 let timerInterval = null;
 let countdown = 240;
-let tapLocked = false;
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -165,13 +164,20 @@ backBtn?.addEventListener("click", () => {
 });
 
 prevCardButton?.addEventListener("click", showPreviousCard);
-card?.addEventListener("click", showNextCard);
-card?.addEventListener("touchend", (e) => {
-  if (tapLocked) return;
-  tapLocked = true;
+
+// 🔒 Prevent double-tap on mobile
+let lastTap = 0;
+function handleCardTap(e) {
+  const now = new Date().getTime();
+  if (now - lastTap < 300) return;
+  lastTap = now;
   showNextCard();
-  setTimeout(() => (tapLocked = false), 300); // debounce
-});
+}
+if ("ontouchstart" in window) {
+  card?.addEventListener("touchend", handleCardTap);
+} else {
+  card?.addEventListener("click", handleCardTap);
+}
 
 function init() {
   const setup = getDeckSetup(deck);
@@ -184,10 +190,8 @@ function init() {
     selector.appendChild(opt);
   });
 
-  // Get button color for this deck
   const iconColor = uiColorMap[deck] || "#ffffff";
 
-  // Apply icon color to buttons and UI
   selector.style.color = iconColor;
   timerDisplay.style.color = iconColor;
   cardCounter.style.color = iconColor;
