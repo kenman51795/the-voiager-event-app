@@ -1,4 +1,3 @@
-
 const card = document.getElementById("card");
 const selector = document.getElementById("phase-selector");
 const timerToggle = document.getElementById("timer-toggle");
@@ -7,6 +6,7 @@ const cardCounter = document.getElementById("card-counter");
 const resetBtn = document.getElementById("reset-button");
 const shuffleBtn = document.getElementById("shuffle-button");
 const backBtn = document.getElementById("back-button");
+const prevCardButton = document.getElementById("prev-card");
 
 const urlParams = new URLSearchParams(window.location.search);
 const deck = urlParams.get("deck") || "base";
@@ -25,19 +25,12 @@ const deckConfig = {
 let currentPhase = "";
 let viewedCards = {};
 let cardList = [];
+let historyStack = [];
 let timerInterval = null;
 let countdown = 240;
 
 function getDeckSetup(deck) {
   return deck === "base" ? deckConfig.base : deckConfig.default;
-}
-
-function getImagePath(phaseIndex, cardIndex) {
-  const phase = getDeckSetup(deck).phases[phaseIndex].toLowerCase();
-  if (phase === "final") {
-    return `assets/${deck}/final.png`;
-  }
-  return `assets/${deck}/${phase}/card${cardIndex + 1}.png`;
 }
 
 function shuffle(array) {
@@ -52,24 +45,44 @@ function getCardList(phaseIndex) {
   const setup = getDeckSetup(deck);
   const phase = setup.phases[phaseIndex].toLowerCase();
   const total = setup.cardCounts[phaseIndex];
-  if (phase === "final") return [`assets/${deck}/final.png`];
+
+  if (phase === "final") {
+    return [`assets/${deck}/final.png`];
+  }
+
   const cards = Array.from({ length: total }, (_, i) =>
     `assets/${deck}/${phase}/card${i + 1}.png`
   );
+
   return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
 }
 
 function showNextCard() {
+  const phase = currentPhase.toLowerCase();
+
+  if (phase === "final") {
+    card.src = `assets/${deck}/final.png`;
+    return;
+  }
+
   if (cardList.length === 0) {
     alert("All cards viewed in this phase.");
     return;
   }
+
   const next = cardList.shift();
-  const phase = currentPhase.toLowerCase();
   if (!viewedCards[phase]) viewedCards[phase] = [];
   viewedCards[phase].push(next);
+  historyStack.push(next);
   card.src = next;
   updateCounter();
+}
+
+function showPreviousCard() {
+  if (historyStack.length < 2) return;
+  historyStack.pop(); // Remove current
+  const prev = historyStack[historyStack.length - 1];
+  card.src = prev;
 }
 
 function changePhase(index) {
@@ -78,6 +91,7 @@ function changePhase(index) {
   const phase = currentPhase.toLowerCase();
   if (!viewedCards[phase]) viewedCards[phase] = [];
   cardList = getCardList(index);
+  historyStack = [];
   showNextCard();
 }
 
@@ -125,6 +139,7 @@ resetBtn?.addEventListener("click", () => {
   const phase = currentPhase.toLowerCase();
   viewedCards[phase] = [];
   cardList = getCardList(selector.selectedIndex);
+  historyStack = [];
   showNextCard();
 });
 
@@ -136,6 +151,7 @@ backBtn?.addEventListener("click", () => {
   window.location.href = "index.html";
 });
 
+prevCardButton?.addEventListener("click", showPreviousCard);
 card?.addEventListener("click", showNextCard);
 card?.addEventListener("touchend", showNextCard);
 
