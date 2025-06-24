@@ -69,6 +69,7 @@ body::before {
   opacity: 0.9;
 }
 
+/* === Deck Button Themes === */
 .deck-button.the-voiager     { background-color: #3b5549; color: #E6CDB8; }
 .deck-button.departure       { background-color: #444444; color: #B1B1B1; }
 .deck-button.eternal-flame   { background-color: #8b2e1d; color: #F2C572; }
@@ -101,6 +102,7 @@ body::before {
   justify-content: center;
   align-items: center;
   min-height: 0;
+  position: relative; /* Required for overlay to position correctly */
 }
 
 #card {
@@ -110,36 +112,26 @@ body::before {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.4s ease-in-out;
   cursor: pointer;
+  z-index: 1;
 }
 
-#footer-link {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  font-size: 0.85em;
-  color: rgb(59, 85, 73);
-  text-decoration: none;
-  opacity: 0.8;
-  z-index: 10;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+/* === Crumple Texture Overlay === */
+#crumple-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 100%;
+  max-height: 80vh;
+  background-image: url("assets/crumple-texture.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
 }
 
-#footer-link:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  body {
-    background-image: url("assets/background-mobile.png");
-    background-position: center top;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #000;
-  }
-}
-
-/* === Card Crumple / Uncrumple Animation === */
+/* === Legacy Keyframe Transitions (Optional now with GSAP) === */
 .card-transition-out {
   animation: crumpleOut 0.35s forwards ease-in;
 }
@@ -171,5 +163,34 @@ body::before {
     transform: scale(1) rotate(0deg);
     opacity: 1;
     filter: blur(0);
+  }
+}
+
+/* === Footer Link === */
+#footer-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.85em;
+  color: rgb(59, 85, 73);
+  text-decoration: none;
+  opacity: 0.8;
+  z-index: 10;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#footer-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* === Mobile Background Override === */
+@media (max-width: 768px) {
+  body {
+    background-image: url("assets/background-mobile.png");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
   }
 }
