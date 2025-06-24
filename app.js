@@ -73,26 +73,33 @@ function animateCardTransition(newSrc) {
   const tempImg = new Image();
   tempImg.src = newSrc;
 
-  // Wait until the new image is fully loaded
+  // Prevent multiple taps during transition
+  card.style.pointerEvents = "none";
+
   tempImg.onload = () => {
-    // Fade out the current card first
+    // Step 1: Fade out current card
     gsap.to(card, {
       duration: 0.25,
       opacity: 0,
       scale: 0.95,
       ease: "power1.inOut",
       onComplete: () => {
-        // Now update the card source after fade-out
+        // Step 2: Set new image
         card.src = newSrc;
 
-        // Then fade in the new card
-        gsap.fromTo(card,
+        // Step 3: Fade in new card
+        gsap.fromTo(
+          card,
           { opacity: 0, scale: 1.05 },
           {
             duration: 0.3,
             opacity: 1,
             scale: 1,
-            ease: "power1.out"
+            ease: "power1.out",
+            onComplete: () => {
+              // Step 4: Re-enable interactions
+              card.style.pointerEvents = "auto";
+            }
           }
         );
       }
