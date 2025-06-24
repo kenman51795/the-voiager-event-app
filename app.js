@@ -70,24 +70,34 @@ function getCardList(phaseIndex) {
 }
 
 function animateCardTransition(newSrc) {
-  gsap.to(card, {
-    duration: 0.25,
-    opacity: 0,
-    scale: 0.95,
-    ease: "power1.inOut",
-    onComplete: () => {
-      card.src = newSrc;
-      gsap.fromTo(card, 
-        { opacity: 0, scale: 1.05 }, 
-        {
-          duration: 0.3,
-          opacity: 1,
-          scale: 1,
-          ease: "power1.out"
-        }
-      );
-    }
-  });
+  const tempImg = new Image();
+  tempImg.src = newSrc;
+
+  // Wait until the new image is fully loaded
+  tempImg.onload = () => {
+    // Fade out the current card first
+    gsap.to(card, {
+      duration: 0.25,
+      opacity: 0,
+      scale: 0.95,
+      ease: "power1.inOut",
+      onComplete: () => {
+        // Now update the card source after fade-out
+        card.src = newSrc;
+
+        // Then fade in the new card
+        gsap.fromTo(card,
+          { opacity: 0, scale: 1.05 },
+          {
+            duration: 0.3,
+            opacity: 1,
+            scale: 1,
+            ease: "power1.out"
+          }
+        );
+      }
+    });
+  };
 }
 
 function showNextCard() {
