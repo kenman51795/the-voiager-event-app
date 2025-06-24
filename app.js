@@ -70,27 +70,22 @@ function getCardList(phaseIndex) {
 }
 
 function animateCardTransition(newSrc) {
-  if (!card) return;
-
   gsap.to(card, {
-    duration: 0.3,
-    scale: 0.8,
+    duration: 0.25,
     opacity: 0,
-    ease: "power2.in",
+    scale: 0.95,
+    ease: "power1.inOut",
     onComplete: () => {
       card.src = newSrc;
-
-      gsap.set(card, {
-        scale: 1.2,
-        opacity: 0
-      });
-
-      gsap.to(card, {
-        duration: 0.4,
-        scale: 1,
-        opacity: 1,
-        ease: "power2.out"
-      });
+      gsap.fromTo(card, 
+        { opacity: 0, scale: 1.05 }, 
+        {
+          duration: 0.3,
+          opacity: 1,
+          scale: 1,
+          ease: "power1.out"
+        }
+      );
     }
   });
 }
