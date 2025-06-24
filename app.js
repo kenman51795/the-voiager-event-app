@@ -69,18 +69,36 @@ function getCardList(phaseIndex) {
   return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
 }
 
-function animateCardTransition(newSrc) {
-  card.classList.add("card-transition-out");
+function animateCardTransition(nextSrc) {
+  if (!card) return;
 
-  setTimeout(() => {
-    card.src = newSrc;
-    card.classList.remove("card-transition-out");
-    card.classList.add("card-transition-in");
+  gsap.to(card, {
+    duration: 0.3,
+    scale: 0.1,
+    rotation: 45,
+    opacity: 0,
+    filter: "blur(6px)",
+    ease: "power2.in",
+    onComplete: () => {
+      card.src = nextSrc;
 
-    setTimeout(() => {
-      card.classList.remove("card-transition-in");
-    }, 350);
-  }, 350);
+      gsap.set(card, {
+        scale: 0.1,
+        rotation: -45,
+        opacity: 0,
+        filter: "blur(6px)"
+      });
+
+      gsap.to(card, {
+        duration: 0.35,
+        scale: 1,
+        rotation: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        ease: "back.out(1.7)"
+      });
+    }
+  });
 }
 
 function showNextCard() {
@@ -106,7 +124,7 @@ function showNextCard() {
 
 function showPreviousCard() {
   if (historyStack.length < 2) return;
-  historyStack.pop(); // Remove current card
+  historyStack.pop();
   const prev = historyStack[historyStack.length - 1];
   animateCardTransition(prev);
   updateCounter();
