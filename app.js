@@ -72,59 +72,59 @@ function getCardList(phaseIndex) {
   return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
 }
 
-// Animate card transition with crumple overlay
-function animateCardTransition(newSrc) {
-  if (!card || !overlay) return;
+function animateCrumple(cardElem, newSrc, callback) {
+  const img = cardElem.querySelector(".card-img");
+  const overlay = cardElem.querySelector(".crumple-overlay");
 
-  // Crumple in
-  gsap.to(overlay, {
-    duration: 0.25,
-    opacity: 0.6,
-    ease: "power2.inOut"
+  const tl = gsap.timeline({
+    onComplete: callback
   });
 
-  gsap.to(card, {
-    duration: 0.35,
-    scale: 0.1,
-    rotation: 15,
-    opacity: 0.5,
-    ease: "power2.in",
-    onComplete: () => {
-      card.src = newSrc;
+  tl.to(overlay, { duration: 0.2, opacity: 0.9 }, 0)
+    .to(cardElem, {
+      duration: 0.4,
+      rotationX: 15,
+      rotationY: -10,
+      borderRadius: "50%",
+      scale: 0.2,
+      ease: "power2.inOut"
+    }, 0.1)
+    .to(img, { duration: 0.1, opacity: 0 }, "<");
 
-      // Reset card state
-      gsap.set(card, {
-        scale: 0.1,
-        rotation: -15,
-        opacity: 0
-      });
-
-      // Crumple out
-      gsap.to(overlay, {
-        duration: 0.3,
-        opacity: 0,
-        ease: "power2.out"
-      });
-
-      gsap.to(card, {
-        duration: 0.4,
-        scale: 1,
-        rotation: 0,
-        opacity: 1,
-        ease: "back.out(1.7)"
-      });
-    }
-  });
+  return tl;
 }
 
-// Load next card
+function animateUncrumple(cardElem) {
+  const img = cardElem.querySelector(".card-img");
+  const overlay = cardElem.querySelector(".crumple-overlay");
+
+  gsap.set(cardElem, {
+    rotationX: -20,
+    rotationY: 10,
+    borderRadius: "50%",
+    scale: 0.2
+  });
+  gsap.set(img, { opacity: 0 });
+  gsap.set(overlay, { opacity: 1 });
+
+  const tl = gsap.timeline();
+  tl.to(cardElem, {
+    duration: 0.5,
+    rotationX: 0,
+    rotationY: 0,
+    borderRadius: "12px",
+    scale: 1,
+    ease: "back.out(1.7)"
+  })
+  .to(img, { duration: 0.2, opacity: 1 }, "<")
+  .to(overlay, { duration: 0.3, opacity: 0 }, "<");
+
+  return tl;
+}
+
 function showNextCard() {
   const phase = currentPhase.toLowerCase();
-
-  if (phase === "final") {
-    animateCardTransition(`assets/${deck}/final/final.png`);
-    return;
-  }
+  if (phase === "final") return;
 
   if (cardList.length === 0) {
     alert("All cards viewed in this phase.");
@@ -135,16 +135,29 @@ function showNextCard() {
   if (!viewedCards[phase]) viewedCards[phase] = [];
   viewedCards[phase].push(next);
   historyStack.push(next);
-  animateCardTransition(next);
+
+  const currentCardElem = document.querySelector("#current-card-div");
+  const img = currentCardElem.querySelector(".card-img");
+
+  animateCrumple(currentCardElem, next, () => {
+    img.src = next;
+    gsap.set(currentCardElem, { clearProps: "all" });
+  });
+
   updateCounter();
 }
 
-// Load previous card
 function showPreviousCard() {
   if (historyStack.length < 2) return;
+
+  const currentCardElem = document.querySelector("#current-card-div");
+  const prev = historyStack[historyStack.length - 2];
   historyStack.pop();
-  const prev = historyStack[historyStack.length - 1];
-  animateCardTransition(prev);
+
+  const img = currentCardElem.querySelector(".card-img");
+  img.src = prev;
+
+  animateUncrumple(currentCardElem);
   updateCounter();
 }
 
