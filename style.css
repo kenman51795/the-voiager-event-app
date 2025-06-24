@@ -178,7 +178,9 @@ body::before {
   perspective-origin: center center;
 }
 
-.card {
+#card {
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease, transform 0.3s ease;
   position: absolute;
   top: 0; left: 0;
   width: 100%;

@@ -241,7 +241,34 @@ function init() {
     changePhase(Number(e.target.value));
   });
 
-  changePhase(0);
+  // Load first card after phase is set
+  const setupPhase = () => {
+    const firstPhaseIndex = 0;
+    currentPhase = setup.phases[firstPhaseIndex];
+    const phase = currentPhase.toLowerCase();
+    if (!viewedCards[phase]) viewedCards[phase] = [];
+    cardList = getCardList(firstPhaseIndex);
+    historyStack = [];
+
+    const firstCard = cardList.shift();
+    viewedCards[phase].push(firstCard);
+    historyStack.push(firstCard);
+
+    const tempImg = new Image();
+    tempImg.src = firstCard;
+    tempImg.onload = () => {
+      card.src = firstCard;
+      gsap.fromTo(
+        card,
+        { opacity: 0, scale: 1.05 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power1.out" }
+      );
+    };
+
+    updateCounter();
+  };
+
+  setupPhase();
 }
 
 init();
