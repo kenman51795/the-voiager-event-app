@@ -7,8 +7,14 @@ html, body {
   font-family: Bookman, serif;
   touch-action: manipulation;
   overflow-x: hidden;
-  background-color: #000; /* fallback to avoid white flash */
-  -webkit-overflow-scrolling: touch; /* preserves pull-to-refresh */
+  background-color: #000;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  transition: opacity 0.6s ease-in;
+}
+
+body.loaded {
+  opacity: 1;
 }
 
 body {
@@ -32,6 +38,7 @@ body::before {
   pointer-events: none;
 }
 
+/* === Home Screen Layout === */
 .home-screen {
   display: flex;
   flex-direction: column;
@@ -79,6 +86,7 @@ body::before {
 .deck-button.family-legacy   { background-color: #a46b38; color: #E5CDB3; }
 .deck-button.solitaire       { background-color: #5c3d6b; color: #D9C7B3; }
 
+/* === Header & Controls === */
 #header {
   display: flex;
   justify-content: space-between;
@@ -95,122 +103,56 @@ body::before {
   gap: 10px;
 }
 
+/* === Card Layout === */
 #card-container {
-  position: relative; /* ensure child elements like overlay stack correctly */
-  flex: 1;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 0;
+  flex: 1;
+  width: 100%;
   z-index: 1;
+  position: relative;
 }
 
-#card {
-  position: relative; /* keep card above background but under overlay */
-  z-index: 2;
-  max-width: 90%;
-  max-height: 80vh;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.4s ease-in-out;
-  cursor: pointer;
-}
-
-#crumple-overlay {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: 100%;
-  max-height: 80vh;
-  background-image: url("assets/crumple-texture.png");
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* === Legacy Keyframe Transitions (Optional now with GSAP) === */
-.card-transition-out {
-  animation: crumpleOut 0.35s forwards ease-in;
-}
-
-.card-transition-in {
-  animation: uncrumpleIn 0.35s forwards ease-out;
-}
-
-@keyframes crumpleOut {
-  0% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-    filter: blur(0);
-  }
-  100% {
-    transform: scale(0.1) rotate(45deg);
-    opacity: 0;
-    filter: blur(8px);
-  }
-}
-
-@keyframes uncrumpleIn {
-  0% {
-    transform: scale(0.1) rotate(-45deg);
-    opacity: 0;
-    filter: blur(8px);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-.card-stack {
+#current-card-div {
   position: relative;
   width: 90%;
   max-width: 600px;
-  height: auto;
   max-height: 80vh;
-  perspective: 800px;
-  perspective-origin: center center;
-}
-
-#card {
-  opacity: 0; /* Start hidden */
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1000px;
+  z-index: 2;
 }
 
+/* === Card Image === */
 .card-img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  z-index: 2;
 }
 
+/* === Optional Texture Overlay (disabled if unused) === */
 .crumple-overlay {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+  background-image: url("assets/crumple-texture.png");
+  background-size: cover;
+  background-position: center;
   mix-blend-mode: multiply;
   opacity: 0;
-  z-index: 5;
+  z-index: 3;
 }
 
 /* === Footer Link === */
@@ -231,42 +173,7 @@ body::before {
   text-decoration: underline;
 }
 
-#current-card-div {
-  position: relative;
-  width: 90%;
-  max-height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-  z-index: 1;
-}
-
-.card-img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-
-.crumple-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("assets/crumple-texture.png");
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* === Mobile Background Override === */
+/* === Mobile === */
 @media (max-width: 768px) {
   body {
     background-image: url("assets/background-mobile.png");
@@ -275,13 +182,4 @@ body::before {
     background-repeat: no-repeat;
     background-color: #000;
   }
-}
-
-body {
-  opacity: 0;
-  transition: opacity 0.6s ease-in;
-}
-
-body.loaded {
-  opacity: 1;
 }
