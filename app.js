@@ -43,6 +43,7 @@ let cardList = [];
 let historyStack = [];
 let timerInterval = null;
 let countdown = 240;
+let lastTap = 0;
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -68,11 +69,25 @@ function getCardList(phaseIndex) {
   return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
 }
 
+function animateCardTransition(newSrc) {
+  card.classList.add("card-transition-out");
+
+  setTimeout(() => {
+    card.src = newSrc;
+    card.classList.remove("card-transition-out");
+    card.classList.add("card-transition-in");
+
+    setTimeout(() => {
+      card.classList.remove("card-transition-in");
+    }, 350);
+  }, 350);
+}
+
 function showNextCard() {
   const phase = currentPhase.toLowerCase();
 
   if (phase === "final") {
-    card.src = `assets/${deck}/final/final.png`;
+    animateCardTransition(`assets/${deck}/final/final.png`);
     return;
   }
 
@@ -85,7 +100,7 @@ function showNextCard() {
   if (!viewedCards[phase]) viewedCards[phase] = [];
   viewedCards[phase].push(next);
   historyStack.push(next);
-  card.src = next;
+  animateCardTransition(next);
   updateCounter();
 }
 
@@ -93,7 +108,7 @@ function showPreviousCard() {
   if (historyStack.length < 2) return;
   historyStack.pop(); // Remove current card
   const prev = historyStack[historyStack.length - 1];
-  card.src = prev;
+  animateCardTransition(prev);
   updateCounter();
 }
 
@@ -165,14 +180,13 @@ backBtn?.addEventListener("click", () => {
 
 prevCardButton?.addEventListener("click", showPreviousCard);
 
-// 🔒 Prevent double-tap on mobile
-let lastTap = 0;
 function handleCardTap(e) {
   const now = new Date().getTime();
   if (now - lastTap < 300) return;
   lastTap = now;
   showNextCard();
 }
+
 if ("ontouchstart" in window) {
   card?.addEventListener("touchend", handleCardTap);
 } else {
@@ -182,7 +196,6 @@ if ("ontouchstart" in window) {
 function init() {
   const setup = getDeckSetup(deck);
 
-  // Populate phase selector
   setup.phases.forEach((phase, i) => {
     const opt = document.createElement("option");
     opt.value = i;

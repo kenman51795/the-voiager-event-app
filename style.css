@@ -138,3 +138,38 @@ body::before {
     background-color: #000;
   }
 }
+
+/* === Card Crumple / Uncrumple Animation === */
+.card-transition-out {
+  animation: crumpleOut 0.35s forwards ease-in;
+}
+
+.card-transition-in {
+  animation: uncrumpleIn 0.35s forwards ease-out;
+}
+
+@keyframes crumpleOut {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(0.1) rotate(45deg);
+    opacity: 0;
+    filter: blur(8px);
+  }
+}
+
+@keyframes uncrumpleIn {
+  0% {
+    transform: scale(0.1) rotate(-45deg);
+    opacity: 0;
+    filter: blur(8px);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
