@@ -1,5 +1,4 @@
 const card = document.getElementById("card");
-const overlay = document.getElementById("crumple-overlay");
 const selector = document.getElementById("phase-selector");
 const timerToggle = document.getElementById("timer-toggle");
 const timerDisplay = document.getElementById("timer-display");
@@ -46,7 +45,6 @@ let timerInterval = null;
 let countdown = 240;
 let lastTap = 0;
 
-// Shuffle utility
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -55,7 +53,6 @@ function shuffle(array) {
   return array;
 }
 
-// Generate card list for phase
 function getCardList(phaseIndex) {
   const setup = getDeckSetup(deck);
   const phase = setup.phases[phaseIndex].toLowerCase();
@@ -72,59 +69,39 @@ function getCardList(phaseIndex) {
   return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
 }
 
-function animateCrumple(cardElem, newSrc, callback) {
-  const img = cardElem.querySelector(".card-img");
-  const overlay = cardElem.querySelector(".crumple-overlay");
+function animateCardTransition(newSrc) {
+  if (!card) return;
 
-  const tl = gsap.timeline({
-    onComplete: callback
+  gsap.to(card, {
+    duration: 0.3,
+    scale: 0.8,
+    opacity: 0,
+    ease: "power2.in",
+    onComplete: () => {
+      card.src = newSrc;
+
+      gsap.set(card, {
+        scale: 1.2,
+        opacity: 0
+      });
+
+      gsap.to(card, {
+        duration: 0.4,
+        scale: 1,
+        opacity: 1,
+        ease: "power2.out"
+      });
+    }
   });
-
-  tl.to(overlay, { duration: 0.2, opacity: 0.9 }, 0)
-    .to(cardElem, {
-      duration: 0.4,
-      rotationX: 15,
-      rotationY: -10,
-      borderRadius: "50%",
-      scale: 0.2,
-      ease: "power2.inOut"
-    }, 0.1)
-    .to(img, { duration: 0.1, opacity: 0 }, "<");
-
-  return tl;
-}
-
-function animateUncrumple(cardElem) {
-  const img = cardElem.querySelector(".card-img");
-  const overlay = cardElem.querySelector(".crumple-overlay");
-
-  gsap.set(cardElem, {
-    rotationX: -20,
-    rotationY: 10,
-    borderRadius: "50%",
-    scale: 0.2
-  });
-  gsap.set(img, { opacity: 0 });
-  gsap.set(overlay, { opacity: 1 });
-
-  const tl = gsap.timeline();
-  tl.to(cardElem, {
-    duration: 0.5,
-    rotationX: 0,
-    rotationY: 0,
-    borderRadius: "12px",
-    scale: 1,
-    ease: "back.out(1.7)"
-  })
-  .to(img, { duration: 0.2, opacity: 1 }, "<")
-  .to(overlay, { duration: 0.3, opacity: 0 }, "<");
-
-  return tl;
 }
 
 function showNextCard() {
   const phase = currentPhase.toLowerCase();
-  if (phase === "final") return;
+
+  if (phase === "final") {
+    animateCardTransition(`assets/${deck}/final/final.png`);
+    return;
+  }
 
   if (cardList.length === 0) {
     alert("All cards viewed in this phase.");
@@ -135,33 +112,18 @@ function showNextCard() {
   if (!viewedCards[phase]) viewedCards[phase] = [];
   viewedCards[phase].push(next);
   historyStack.push(next);
-
-  const currentCardElem = document.querySelector("#current-card-div");
-  const img = currentCardElem.querySelector(".card-img");
-
-  animateCrumple(currentCardElem, next, () => {
-    img.src = next;
-    gsap.set(currentCardElem, { clearProps: "all" });
-  });
-
+  animateCardTransition(next);
   updateCounter();
 }
 
 function showPreviousCard() {
   if (historyStack.length < 2) return;
-
-  const currentCardElem = document.querySelector("#current-card-div");
-  const prev = historyStack[historyStack.length - 2];
   historyStack.pop();
-
-  const img = currentCardElem.querySelector(".card-img");
-  img.src = prev;
-
-  animateUncrumple(currentCardElem);
+  const prev = historyStack[historyStack.length - 1];
+  animateCardTransition(prev);
   updateCounter();
 }
 
-// Phase switch
 function changePhase(index) {
   const setup = getDeckSetup(deck);
   currentPhase = setup.phases[index];
@@ -172,7 +134,6 @@ function changePhase(index) {
   showNextCard();
 }
 
-// Card count
 function updateCounter() {
   const phase = currentPhase.toLowerCase();
   const viewed = viewedCards[phase]?.length || 0;
@@ -182,7 +143,6 @@ function updateCounter() {
   cardCounter.textContent = `${viewed}/${total}`;
 }
 
-// Timer
 function updateTimerDisplay() {
   const m = Math.floor(countdown / 60);
   const s = countdown % 60;
@@ -204,7 +164,6 @@ function startTimer() {
   }, 1000);
 }
 
-// Event bindings
 timerToggle?.addEventListener("click", () => {
   if (timerInterval) {
     clearInterval(timerInterval);
@@ -233,7 +192,6 @@ backBtn?.addEventListener("click", () => {
 
 prevCardButton?.addEventListener("click", showPreviousCard);
 
-// Tap/Click Handler with debounce
 function handleCardTap() {
   const now = new Date().getTime();
   if (now - lastTap < 300) return;
@@ -247,7 +205,6 @@ if ("ontouchstart" in window) {
   card?.addEventListener("click", handleCardTap);
 }
 
-// Init
 function init() {
   const setup = getDeckSetup(deck);
 
