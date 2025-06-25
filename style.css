@@ -237,7 +237,7 @@ button {
 
   #card-container {
     padding-top: 8vh;
-    padding-bottom: 0.5vh; /* ↓ tightened padding below card */
+    padding-bottom: 0.5vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -250,12 +250,17 @@ button {
     border-radius: 12px;
   }
 
+  #current-card-div {
+    margin-top: 12vh; /* Push card below logo */
+  }
+
   .controls {
-    margin-top: 0.5rem; /* ↓ brings controls closer to card */
+    margin-top: 1vh; /* Bring controls closer to card */
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
+    order: 2;
   }
 
   #phase-selector {
