@@ -219,18 +219,15 @@ button {
     background-color: #000;
   }
 
-  /* Header layout on mobile */
   #header {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
-    margin-top: 1.2rem;
+    margin-top: 2.2rem; /* was 1.2rem */
   }
 
-  /* Top-left controls (back + phase selector) */
   .header-left {
-    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -238,32 +235,8 @@ button {
     padding: 0;
   }
 
-  /* Control buttons below card */
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    width: 100%;
-    order: 2;
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-  }
-
-  #phase-selector {
-    width: auto;
-    max-width: 90vw;
-    font-size: 1rem;
-    padding: 0.4rem;
-  }
-
-  /* Adjust card position and size */
   #card-container {
-    padding-top: 3vh;
+    padding-top: 4vh; /* Increased from 3vh */
     padding-bottom: 1.5vh;
     display: flex;
     justify-content: center;
@@ -275,6 +248,21 @@ button {
     max-height: 65vh;
     object-fit: contain;
     border-radius: 12px;
+  }
+
+  .controls {
+    margin-top: 2rem; /* was 1.5rem */
+    padding-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  #phase-selector {
+    width: auto;
+    max-width: 90vw;
+    font-size: 1rem;
+    padding: 0.4rem;
   }
 
   button,
