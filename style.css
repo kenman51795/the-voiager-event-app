@@ -95,7 +95,7 @@ body::before {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   justify-content: flex-start;
   flex: 1;
   padding-left: 1vw; /* even closer to edge */
@@ -104,7 +104,7 @@ body::before {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   justify-content: flex-end;
   flex: 1;
   padding-right: 1vw; /* even closer to edge */
