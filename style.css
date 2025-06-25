@@ -89,16 +89,24 @@ body::before {
   width: 100%;
   max-width: 1100px;
   padding: 0 2rem;
-  margin: 10px auto;
+  margin: 60px auto 10px auto; /* added top margin to clear logo */
 }
 
 .header-left,
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-left: auto;
-  margin-top: 20px; /* Adjust this value as needed */
+  gap: 12px;
+}
+
+.header-left {
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.header-right {
+  justify-content: flex-end;
+  flex: 1;
 }
 
 #phase-selector {
