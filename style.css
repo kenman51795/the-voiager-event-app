@@ -96,7 +96,9 @@ body::before {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
+  margin-left: auto;
+  margin-top: 20px; /* Adjust this value as needed */
 }
 
 #phase-selector {
