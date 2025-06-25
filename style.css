@@ -65,6 +65,28 @@ body::before {
   transition: all 0.2s ease;
 }
 
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+#back-button,
+#shuffle-button,
+#reset-button,
+#timer-toggle,
+#prev-card {
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .deck-button:hover {
   opacity: 0.9;
 }
