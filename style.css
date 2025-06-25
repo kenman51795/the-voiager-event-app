@@ -251,11 +251,11 @@ button {
   }
 
   #current-card-div {
-    margin-top: 12vh; /* Push card below logo */
+    margin-top: 12vh;
   }
 
   .controls {
-    margin-top: 1vh; /* Bring controls closer to card */
+    margin-top: 4vh; /* 🟢 Updated: More space below card */
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
