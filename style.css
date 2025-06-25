@@ -141,3 +141,19 @@ body::before {
     background-color: #000;
   }
 }
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  max-width: 900px;
+  margin: 10px auto;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
