@@ -95,19 +95,19 @@ body::before {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   justify-content: flex-start;
   flex: 1;
-  padding-left: 1vw; /* even closer to edge */
+  padding-left: 2vw; /* ← Adjust this to control left-side spacing */
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   justify-content: flex-end;
   flex: 1;
-  padding-right: 1vw; /* even closer to edge */
+  padding-right: 2vw; /* ← Adjust this to control right-side spacing */
 }
 
 #phase-selector {
