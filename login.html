@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enter Access Password</title>
+  <style>
+    body {
+      background-color: #3b5549; /* Voiager dark green */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Bookman, serif;
+      color: #E6CDB8;
+      margin: 0;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    input[type="password"] {
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      border: none;
+      width: 100%;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #E6CDB8;
+      color: #3b5549;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .error {
+      color: #ffaaaa;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Enter Password to Access</h2>
+    <input type="password" id="password" placeholder="Password..." />
+    <button onclick="checkPassword()">Enter</button>
+    <div class="error" id="error-message"></div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      const correctPassword = "grwthruothers";
+
+      if (input === correctPassword) {
+        document.cookie = "eventapp_auth=" + input + "; path=/";
+        window.location.href = "/";
+      } else {
+        document.getElementById("error-message").textContent = "Incorrect password. Try again.";
+      }
+    }
+  </script>
+</body>
+</html>
