@@ -227,8 +227,7 @@ button {
     margin-top: 1.2rem;
   }
 
-  .header-left,
-  .header-right {
+  .header-left {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -238,7 +237,6 @@ button {
   }
 
   .controls {
-    order: 2;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -246,6 +244,11 @@ button {
     margin-top: 1.5rem;
     padding-bottom: 1.5rem;
     width: 100%;
+    order: 2;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
   }
 
   #phase-selector {
