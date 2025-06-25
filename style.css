@@ -237,7 +237,7 @@ button {
 
   #card-container {
     padding-top: 8vh;
-    padding-bottom: 1.5vh;
+    padding-bottom: 0.5vh; /* ↓ tightened padding below card */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -251,7 +251,7 @@ button {
   }
 
   .controls {
-    margin-top: 1.2rem; /* ← tighter spacing below card */
+    margin-top: 0.5rem; /* ↓ brings controls closer to card */
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
