@@ -74,24 +74,22 @@ function animateCardTransition(newSrc) {
   tempImg.src = newSrc;
 
   tempImg.onload = () => {
-    gsap.to(card, {
-      duration: 0.2,
-      opacity: 0,
-      scale: 0.95,
-      ease: "power1.in",
-      onComplete: () => {
-        card.src = newSrc;
-        gsap.fromTo(card,
-          { opacity: 0, scale: 1.05 },
-          {
-            duration: 0.3,
-            opacity: 1,
-            scale: 1,
-            ease: "power1.out"
-          }
-        );
+    // Set card invisible *before* swapping source
+    gsap.set(card, { opacity: 0 });
+
+    // Update source
+    card.src = newSrc;
+
+    // Animate in only after source is set
+    gsap.fromTo(card,
+      { opacity: 0, scale: 1.05 },
+      {
+        duration: 0.3,
+        opacity: 1,
+        scale: 1,
+        ease: "power1.out"
       }
-    });
+    );
   };
 }
 
