@@ -251,11 +251,11 @@ button {
   }
 
   #current-card-div {
-    margin-top: 12vh;
+    margin-top: 22vh;
   }
 
   .controls {
-    margin-top: 4vh; /* 🟢 Updated: More space below card */
+    margin-top: 2vh; /* 🟢 Updated: More space below card */
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
