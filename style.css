@@ -87,26 +87,27 @@ body::before {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
-  padding: 0 2rem;
-  margin: 60px auto 10px auto; /* added top margin to clear logo */
+  max-width: 100%;
+  padding: 0 3vw; /* smaller padding, pushes content out */
+  margin: 70px 0 10px 0; /* extra top margin to clear logo */
 }
 
-.header-left,
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
+  flex: 1;
+  padding-left: 1vw; /* even closer to edge */
+}
+
 .header-right {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.header-left {
-  justify-content: flex-start;
-  flex: 1;
-}
-
-.header-right {
   justify-content: flex-end;
   flex: 1;
+  padding-right: 1vw; /* even closer to edge */
 }
 
 #phase-selector {
