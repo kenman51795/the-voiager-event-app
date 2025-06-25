@@ -209,7 +209,7 @@ button {
   text-decoration: underline;
 }
 
-/* --- MOBILE STYLES ONLY --- */
+/* === MOBILE STYLES ONLY === */
 @media (max-width: 768px) {
   body {
     background-image: url("assets/background-mobile.png");
@@ -222,53 +222,56 @@ button {
   #header {
     flex-direction: column;
     align-items: center;
+    margin-top: 1.5rem;
     gap: 0.75rem;
-    margin-top: 1rem;
   }
 
-  .header-left,
-  .header-right {
+  .header-top {
+    display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    padding: 0;
   }
 
   #phase-selector {
-    width: 90%;
-    max-width: 300px;
-    text-align: center;
+    max-width: 280px;
+    font-size: 1rem;
+    padding: 0.4rem;
   }
 
   #card-container {
-    padding-top: 4vh;
+    padding-top: 2vh;
     padding-bottom: 2vh;
+    display: flex;
     justify-content: center;
     align-items: flex-start;
   }
 
   #card {
-    max-width: 90%;
+    max-width: 92%;
     max-height: 65vh;
-    opacity: 0;
+    object-fit: contain;
+    border-radius: 12px;
   }
 
   .controls {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     margin-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   button,
   #timer-toggle {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     padding: 10px;
   }
 
   #card-counter {
-    margin-top: 6px;
     font-size: 1rem;
+    margin-top: 6px;
   }
 }
 

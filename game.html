@@ -4,30 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Voiager Game</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
- <div id="header">
-  <div class="header-left">
-    <button id="back-button">←</button>
-    <select id="phase-selector"></select>
+  <div id="header">
+    <div class="header-top">
+      <button id="back-button">←</button>
+      <select id="phase-selector"></select>
+    </div>
   </div>
-  <div class="header-right controls">
+
+  <div id="card-container">
+    <img id="card" src="" alt="Card"/>
+  </div>
+
+  <div class="controls">
     <button id="prev-card" title="Go Back One Card">⬅️</button>
     <button id="shuffle-button">🔀</button>
     <button id="reset-button">🔁</button>
     <button id="timer-toggle">⏱ <span id="timer-display"></span></button>
     <span id="card-counter">0</span>
   </div>
-</div>
-
-
-  <div id="card-container">
-    <img id="card" src="" alt="Card" />
-  </div>
 
   <a id="footer-link" href="https://linktr.ee/thevoiager" target="_blank">@TheVoiager</a>
+  <script src="app.js"></script>
 </body>
 </html>
