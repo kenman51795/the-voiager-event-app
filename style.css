@@ -245,7 +245,7 @@ button {
   }
 
   #card-container {
-    padding-top: 2vh; /* 🔼 Raised further */
+    padding-top: 2vh;
     padding-bottom: 0.5vh;
     display: flex;
     justify-content: center;
@@ -253,7 +253,7 @@ button {
   }
 
   #current-card-div {
-    margin-top: 1.5vh; /* 🔼 Raised even more */
+    margin-top: 1.5vh;
   }
 
   #card {
@@ -264,8 +264,8 @@ button {
   }
 
   .controls {
-    margin-top: 2vh;
-    padding-bottom: 2rem;
+    margin-top: 4vh; /* 🔽 Lowered controls */
+    padding-bottom: 2.5rem;
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
