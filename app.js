@@ -228,8 +228,11 @@ function init() {
     changePhase(Number(e.target.value));
   });
 
-  document.body.classList.add("loaded");
   changePhase(0);
 }
 
-window.addEventListener("load", init);
+// ✅ Final load event
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+  init();
+});
