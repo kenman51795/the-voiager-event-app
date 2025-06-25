@@ -251,7 +251,7 @@ button {
   }
 
   .controls {
-    margin-top: 2.5rem;
+    margin-top: 1.2rem; /* ← tighter spacing below card */
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
