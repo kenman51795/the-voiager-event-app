@@ -253,7 +253,7 @@ button {
   }
 
   #current-card-div {
-    margin-top: 1.5vh;
+    margin-top: 0.5vh; /* 🟢 Nudged card higher */
   }
 
   #card {
