@@ -245,16 +245,11 @@ button {
   }
 
   #card-container {
-    padding-top: 5vh; /* 🟢 Adjust this to vertically center the card */
-    padding-bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 60vh;
-  }
-
-  #current-card-div {
-    margin: 0 auto;
+    margin-top: -4vh; /* 🟢 Raise the card */
   }
 
   #card {
@@ -265,7 +260,7 @@ button {
   }
 
   .controls {
-    margin-top: 3.5vh; /* 🟢 Controls spaced below card, not pushing it up */
+    margin-top: 2.5vh; /* 🟢 Add spacing below the card */
     padding-bottom: 2.5rem;
     justify-content: center;
     flex-wrap: wrap;
