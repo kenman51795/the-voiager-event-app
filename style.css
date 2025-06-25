@@ -224,13 +224,13 @@ button {
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
-    margin-top: 8.5rem; /* 🔧 Moved header further down to clear logo */
+    margin-top: 8.5rem;
   }
 
   .header-left {
     display: flex;
-    justify-content: center;  /* ✅ Center horizontally */
-    align-items: center;      /* ✅ Align vertically just in case */
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
     width: 100%;
@@ -245,7 +245,7 @@ button {
   }
 
   #card-container {
-    padding-top: 4vh;   /* 🔧 Raised card */
+    padding-top: 2vh; /* 🔼 Raised further */
     padding-bottom: 0.5vh;
     display: flex;
     justify-content: center;
@@ -253,7 +253,7 @@ button {
   }
 
   #current-card-div {
-    margin-top: 3vh; /* 🔧 Raise the card closer to the header */
+    margin-top: 1.5vh; /* 🔼 Raised even more */
   }
 
   #card {
@@ -264,7 +264,7 @@ button {
   }
 
   .controls {
-    margin-top: 2vh;  /* Keeps space between card and controls */
+    margin-top: 2vh;
     padding-bottom: 2rem;
     justify-content: center;
     flex-wrap: wrap;
