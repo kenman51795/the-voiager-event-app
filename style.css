@@ -9,12 +9,10 @@ html, body {
   overflow-x: hidden;
   background-color: #000;
   -webkit-overflow-scrolling: touch;
-  opacity: 0;
-  transition: opacity 0.6s ease-in;
-}
 
-body.loaded {
-  opacity: 1;
+  /* TEMPORARY: Disable fade-in to fix blank screen issue */
+  opacity: 1 !important;
+  transition: none !important;
 }
 
 body {
@@ -25,6 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
   overflow-y: auto;
 }
 
@@ -74,4 +73,67 @@ body::before {
 .deck-button.eternal-flame   { background-color: #8b2e1d; color: #F2C572; }
 .deck-button.curious-hearts  { background-color: #aa6c9c; color: #CEC0E2; }
 .deck-button.inner-circle    { background-color: #3c5d87; color: #C8D7E1; }
-.deck-button.family-ties     { background-color: #c77e2a; color: #F
+.deck-button.family-ties     { background-color: #c77e2a; color: #F6E3C5; }
+.deck-button.family-legacy   { background-color: #a46b38; color: #E5CDB3; }
+.deck-button.solitaire       { background-color: #5c3d6b; color: #D9C7B3; }
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  max-width: 900px;
+  margin: 10px;
+  gap: 10px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#card-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+
+#card {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+#footer-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.85em;
+  color: rgb(59, 85, 73);
+  text-decoration: none;
+  opacity: 0.8;
+  z-index: 10;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#footer-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: url("assets/background-mobile.png");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
+  }
+}
