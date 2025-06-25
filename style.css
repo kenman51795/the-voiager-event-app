@@ -257,13 +257,18 @@ button {
     border-radius: 12px;
   }
 
-  .controls {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 1rem;
-    padding-bottom: 1.5rem;
-  }
+ .controls {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  order: 2;
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+}
 
   button,
   #timer-toggle {
