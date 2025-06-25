@@ -220,65 +220,53 @@ button {
   }
 
   #header {
-    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    margin-top: 5.5rem;
-  }
-
-  .header-left {
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: flex-start;
     gap: 0.5rem;
-    width: 100%;
-    padding: 0;
+    margin-top: 1vh;
   }
 
-  #card-container {
-    padding-top: 8vh;
-    padding-bottom: 0.5vh;
-    display: flex;
+  #current-card-div {
+    margin-top: 24vh !important; /* Moves card down below the logo */
+    width: 90%;
+    max-height: 70vh;
+  }
+
+  .controls {
+    margin-top: 2vh !important; /* Space between card and buttons */
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start;
+    gap: 0.5rem;
+    order: 2;
+  }
+
+  .deck-button {
+    font-size: 1rem;
+    padding: 10px 14px;
   }
 
   #card {
-    max-width: 92%;
-    max-height: 65vh;
+    max-width: 100%;
+    max-height: 70vh;
+  }
+
+  .card-img {
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 12px;
   }
 
-  #current-card-div {
-    margin-top: 22vh;
+  select#phase-selector {
+    font-size: 0.95rem;
+    padding: 4px 8px;
   }
 
-  .controls {
-    margin-top: 2vh; /* 🟢 Updated: More space below card */
-    padding-bottom: 2rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    order: 2;
-  }
-
-  #phase-selector {
-    width: auto;
-    max-width: 90vw;
-    font-size: 1rem;
-    padding: 0.4rem;
-  }
-
-  button,
-  #timer-toggle {
-    font-size: 1.2rem;
-    padding: 10px;
-  }
-
-  #card-counter {
-    font-size: 1rem;
-    margin-top: 6px;
+  #footer-link {
+    font-size: 0.75em;
+    bottom: 8px;
+    right: 8px;
   }
 }
 
