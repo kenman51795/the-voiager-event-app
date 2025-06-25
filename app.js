@@ -73,33 +73,21 @@ function animateCardTransition(newSrc) {
   const tempImg = new Image();
   tempImg.src = newSrc;
 
-  // Prevent multiple taps during transition
-  card.style.pointerEvents = "none";
-
   tempImg.onload = () => {
-    // Step 1: Fade out current card
     gsap.to(card, {
-      duration: 0.25,
+      duration: 0.2,
       opacity: 0,
       scale: 0.95,
-      ease: "power1.inOut",
+      ease: "power1.in",
       onComplete: () => {
-        // Step 2: Set new image
         card.src = newSrc;
-
-        // Step 3: Fade in new card
-        gsap.fromTo(
-          card,
+        gsap.fromTo(card,
           { opacity: 0, scale: 1.05 },
           {
             duration: 0.3,
             opacity: 1,
             scale: 1,
-            ease: "power1.out",
-            onComplete: () => {
-              // Step 4: Re-enable interactions
-              card.style.pointerEvents = "auto";
-            }
+            ease: "power1.out"
           }
         );
       }
@@ -109,7 +97,6 @@ function animateCardTransition(newSrc) {
 
 function showNextCard() {
   const phase = currentPhase.toLowerCase();
-
   if (phase === "final") {
     animateCardTransition(`assets/${deck}/final/final.png`);
     return;
@@ -241,34 +228,8 @@ function init() {
     changePhase(Number(e.target.value));
   });
 
-  // Load first card after phase is set
-  const setupPhase = () => {
-    const firstPhaseIndex = 0;
-    currentPhase = setup.phases[firstPhaseIndex];
-    const phase = currentPhase.toLowerCase();
-    if (!viewedCards[phase]) viewedCards[phase] = [];
-    cardList = getCardList(firstPhaseIndex);
-    historyStack = [];
-
-    const firstCard = cardList.shift();
-    viewedCards[phase].push(firstCard);
-    historyStack.push(firstCard);
-
-    const tempImg = new Image();
-    tempImg.src = firstCard;
-    tempImg.onload = () => {
-      card.src = firstCard;
-      gsap.fromTo(
-        card,
-        { opacity: 0, scale: 1.05 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power1.out" }
-      );
-    };
-
-    updateCounter();
-  };
-
-  setupPhase();
+  document.body.classList.add("loaded");
+  changePhase(0);
 }
 
-init();
+window.addEventListener("load", init);
