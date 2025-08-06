@@ -303,23 +303,25 @@ button {
     flex: 0;
     justify-content: center;
     align-items: center;
-    padding: 2vh 0;
+    padding: 2vh 0 4vh 0; /* 👈 Bottom padding added */
     width: 100%;
   }
 
   #card {
-    max-height: 60vh;
+    max-height: 55vh; /* 👈 Reduced to leave room for controls */
     max-width: 90vw;
   }
 
   .controls {
-    margin-top: 2vh;
+    margin-top: 1.5vh;
     margin-bottom: 2vh;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    z-index: 2;
   }
 }
+
 
 /* --- VISIBILITY BOOST FOR TIMER & COUNTER --- */
 #timer-toggle,
