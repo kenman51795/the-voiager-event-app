@@ -273,6 +273,7 @@ button {
 }
 
 /* === MOBILE LANDSCAPE FIX === */
+/* === MOBILE LANDSCAPE FIX === */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
   body {
     background-image: url("assets/background-mobile-landscape.png");
@@ -284,7 +285,7 @@ button {
   }
 
   #card-container {
-    padding-top: 16vh;  /* Adjusted */
+    padding-top: 14vh;  /* Slightly reduced from 16vh to lift the card */
     padding-bottom: 6vh;
     display: flex;
     justify-content: center;
@@ -293,7 +294,9 @@ button {
   }
 
   #card {
-    max-height: 55vh;  /* Adjusted */
+    max-height: 65vh;  /* Increased from 55vh to make the card larger */
+    max-width: 90vw;
+    object-fit: contain;
   }
 
   .controls {
