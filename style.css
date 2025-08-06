@@ -306,3 +306,14 @@ button {
     width: 100%;
   }
 }
+
+/* === LANDSCAPE FIX FOR GAME SCREEN === */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  body.game-screen {
+    background-image: url("assets/background-desktop.png");
+    background-size: 100vw 100vh;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
