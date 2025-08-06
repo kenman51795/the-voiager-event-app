@@ -136,9 +136,6 @@ button {
 #shuffle-button,
 #reset-button,
 #prev-card {
-  background: transparent;
-  border: none;
-  box-shadow: none;
   transition: transform 0.2s ease;
 }
 
@@ -209,10 +206,17 @@ button {
   text-decoration: underline;
 }
 
-/* === MOBILE STYLES ONLY === */
-@media (max-width: 768px) {
+/* === MOBILE PORTRAIT === */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  body {
+    background-image: url("assets/background-mobile-portrait.png");
+  }
+
+  body.game-screen {
+    background-image: url("assets/background-mobile-portrait.png");
+  }
+
   #header {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
@@ -220,9 +224,7 @@ button {
   }
 
   .header-left {
-    display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
     width: 100%;
@@ -239,13 +241,8 @@ button {
   #card-container {
     padding-top: 2vh;
     padding-bottom: 0.5vh;
-    display: flex;
     justify-content: center;
     align-items: flex-start;
-  }
-
-  #current-card-div {
-    margin-top: 0.5vh;
   }
 
   #card {
@@ -261,7 +258,6 @@ button {
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
-    order: 2;
   }
 
   button,
@@ -276,6 +272,55 @@ button {
   }
 }
 
+/* === MOBILE LANDSCAPE FIX === */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  body {
+    background-image: url("assets/background-mobile-landscape.png");
+    background-size: cover;
+    background-position: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  body.game-screen {
+    background-image: url("assets/background-mobile-landscape.png");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    height: 100vh;
+    padding-top: 2vh;
+  }
+
+  #header {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1vh;
+  }
+
+  #card-container {
+    flex: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh 0;
+    width: 100%;
+  }
+
+  #card {
+    max-height: 60vh;
+    max-width: 90vw;
+  }
+
+  .controls {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 /* --- VISIBILITY BOOST FOR TIMER & COUNTER --- */
 #timer-toggle,
 #card-counter {
@@ -286,12 +331,20 @@ button {
   font-weight: bold;
 }
 
-/* === LANDSCAPE GENERAL === */
-@media (orientation: landscape) {
+/* === LANDSCAPE DESKTOP === */
+@media (orientation: landscape) and (min-width: 1025px) {
   html, body {
     height: auto;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  body {
+    background-image: url("assets/background-desktop.png");
+    background-size: 100vw 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
   #card-container {
@@ -299,7 +352,6 @@ button {
     justify-content: center;
     align-items: flex-start;
     padding: 2vh 0;
-    overflow: visible;
   }
 
   #card {
@@ -315,7 +367,7 @@ button {
   }
 }
 
-/* === GAME-SCREEN FULLSCREEN FIX === */
+/* === GAME SCREEN BASE === */
 body.game-screen {
   height: 100vh;
   width: 100vw;
@@ -329,27 +381,4 @@ body.game-screen {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-}
-
-/* === MOBILE PORTRAIT OVERRIDE === */
-@media screen and (max-width: 768px) and (orientation: portrait) {
-  body {
-    background-image: url("assets/background-mobile-portrait.png");
-  }
-
-  body.game-screen {
-    background-image: url("assets/background-mobile-portrait.png");
-  }
-}
-
-/* === MOBILE LANDSCAPE OVERRIDE === */
-@media screen and (max-width: 1024px) and (orientation: landscape) {
-  body {
-    background-image: url("assets/background-mobile-landscape.png");
-    background-size: cover;
-  }
-
-  body.game-screen {
-    background-image: url("assets/background-mobile-landscape.png");
-  }
 }
