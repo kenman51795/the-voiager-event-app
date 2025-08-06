@@ -273,8 +273,11 @@ button {
 }
 
 /* === MOBILE LANDSCAPE FIX === */
-/* === MOBILE LANDSCAPE FIX === */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
+  #header {
+    margin-top: 5vh; /* Reduced from the default (e.g. 8.5rem) */
+  }
+
   body {
     background-image: url("assets/background-mobile-landscape.png");
     background-size: cover;
