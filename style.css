@@ -1,3 +1,4 @@
+
 /* --- GENERAL --- */
 html, body {
   margin: 0;
@@ -23,6 +24,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -209,18 +211,17 @@ button {
   text-decoration: underline;
 }
 
-/* === MOBILE STYLES ONLY === */
-@media (max-width: 768px) {
+/* === MOBILE PORTRAIT === */
+@media screen and (orientation: portrait) and (max-width: 768px) {
   body {
     background-image: url("assets/background-mobile.png");
-    background-position: center top;
     background-size: cover;
-    background-repeat: no-repeat;
-    background-color: #000;
+    background-position: top center;
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 
   #header {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
@@ -228,17 +229,13 @@ button {
   }
 
   .header-left {
-    display: flex;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
     width: 100%;
     padding: 0;
   }
 
   #phase-selector {
-    width: auto;
     max-width: 90vw;
     font-size: 1rem;
     padding: 0.4rem;
@@ -247,24 +244,22 @@ button {
   #card-container {
     padding-top: 2vh;
     padding-bottom: 0.5vh;
-    display: flex;
     justify-content: center;
     align-items: flex-start;
   }
 
   #current-card-div {
-    margin-top: 0.5vh; /* 🟢 Nudged card higher */
+    margin-top: 0.5vh;
   }
 
   #card {
     max-width: 92%;
-    max-height: 65vh;
+    max-height: 70vh;
     object-fit: contain;
-    border-radius: 12px;
   }
 
   .controls {
-    margin-top: 4vh; /* 🔽 Lowered controls */
+    margin-top: 4vh;
     padding-bottom: 2.5rem;
     justify-content: center;
     flex-wrap: wrap;
@@ -284,46 +279,23 @@ button {
   }
 }
 
-/* --- VISIBILITY BOOST FOR TIMER & COUNTER --- */
-#timer-toggle,
-#card-counter {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 6px;
-  padding: 4px 8px;
-  color: white;
-  font-weight: bold;
-}
-
-/* === FINAL LANDSCAPE FIXES === */
-@media (orientation: landscape) {
-  html, body {
-    height: auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
+/* === MOBILE LANDSCAPE === */
+@media screen and (orientation: landscape) and (max-height: 500px) {
   body {
     background-image: url("assets/background-desktop.png");
     background-size: 100vw 100vh;
     background-position: center center;
-    background-repeat: no-repeat;
     background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     min-height: 100vh;
   }
 
   #card-container {
-    flex-grow: 1;
     justify-content: center;
-    align-items: flex-start;
     padding: 2vh 0;
-    overflow: visible;
   }
 
   #card {
-    max-height: 80vh;
+    max-height: 75vh;
     max-width: 90vw;
   }
 
