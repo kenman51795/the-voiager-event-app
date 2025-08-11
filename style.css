@@ -208,12 +208,13 @@ button {
 
 /* === MOBILE PORTRAIT === */
 @media screen and (max-width: 768px) and (orientation: portrait) {
-  body {
-    background-image: url("assets/background-mobile-portrait.png");
-  }
-
+  body,
   body.game-screen {
     background-image: url("assets/background-mobile-portrait.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* prevents mobile zoom */
   }
 
   #header {
@@ -274,21 +275,21 @@ button {
 
 /* === MOBILE LANDSCAPE FIX === */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
-  #header {
-    margin-top: 5vh; /* Reduced from the default (e.g. 8.5rem) */
-  }
-
-  body {
-    background-image: url("assets/background-mobile-landscape.png");
-    background-size: cover;
-  }
-
+  body,
   body.game-screen {
     background-image: url("assets/background-mobile-landscape.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* prevents mobile zoom */
+  }
+
+  #header {
+    margin-top: 5vh;
   }
 
   #card-container {
-    padding-top: 14vh;  /* Slightly reduced from 16vh to lift the card */
+    padding-top: 14vh;
     padding-bottom: 6vh;
     display: flex;
     justify-content: center;
@@ -297,7 +298,7 @@ button {
   }
 
   #card {
-    max-height: 65vh;  /* Increased from 55vh to make the card larger */
+    max-height: 65vh;
     max-width: 90vw;
     object-fit: contain;
   }
