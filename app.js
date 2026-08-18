@@ -1,7 +1,8 @@
 const deckConfig = {
   "the-voiager": {
     name: "The Voiager",
-    accent: "#d8bc84",
+    color: "#3b5549",
+    accent: "#E7D0B8",
     phases: [
       { name: "Discovery", count: 65 },
       { name: "Affinity", count: 65 },
@@ -11,37 +12,44 @@ const deckConfig = {
   },
   "curious-hearts": {
     name: "Curious Hearts",
-    accent: "#e1b6d5",
+    color: "#aa6c9c",
+    accent: "#CEC0E2",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "departure": {
     name: "Departure",
-    accent: "#b9b9b9",
+    color: "#444444",
+    accent: "#A8A8A8",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "eternal-flame": {
     name: "Eternal Flame",
-    accent: "#f2c572",
+    color: "#8b2e1d",
+    accent: "#F2C572",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "family-legacy": {
     name: "Family Legacy",
-    accent: "#e5cdb3",
+    color: "#a46b38",
+    accent: "#E5CDB3",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "family-ties": {
     name: "Family Ties",
-    accent: "#f6e3c5",
+    color: "#c77e2a",
+    accent: "#F6E3C5",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "inner-circle": {
     name: "Inner Circle",
-    accent: "#c8d7e1",
+    color: "#3c5d87",
+    accent: "#C8D7E1",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   },
   "walk-of-faith": {
     name: "Walk of Faith",
-    accent: "#ede8d9",
+    color: "#EDE8D9",
+    accent: "#FFE381",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   }
 };
@@ -192,6 +200,7 @@ function toggleTimer() {
 
 elements.deckName.textContent = config.name;
 document.documentElement.style.setProperty("--accent", config.accent);
+document.documentElement.style.setProperty("--deck-color", config.color);
 config.phases.forEach((phase, index) => {
   elements.selector.add(new Option(phase.name, index));
 });
