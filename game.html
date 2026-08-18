@@ -7,22 +7,26 @@
   <title>The Voiager — Play</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <script src="auth.js"></script>
   <script src="app.js" defer></script>
 </head>
 <body class="game">
   <main class="game-shell">
-    <header class="topbar">
+    <header class="game-header">
       <a class="icon-button back" href="index.html" aria-label="Back to decks">←</a>
-      <div class="journey-meta">
-        <span id="deck-name">The Voiager</span>
-        <label>
-          <span class="sr-only">Choose a phase</span>
-          <select id="phase-selector"></select>
-        </label>
-      </div>
-      <div class="progress" aria-label="Card progress">
-        <span id="card-counter">1 / 65</span>
-        <span class="progress-track"><span id="progress-fill"></span></span>
+      <div class="journey-pill">
+        <div class="journey-meta">
+          <span id="deck-name">The Voiager</span>
+          <label>
+            <span class="sr-only">Choose a phase</span>
+            <select id="phase-selector"></select>
+          </label>
+        </div>
+        <span class="pill-divider" aria-hidden="true"></span>
+        <div class="progress" aria-label="Card progress">
+          <span id="card-counter">1 / 65</span>
+          <span class="progress-track"><span id="progress-fill"></span></span>
+        </div>
       </div>
     </header>
 
