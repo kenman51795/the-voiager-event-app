@@ -107,7 +107,7 @@ html[data-deck="walk-of-faith"] #phase-selector option {
 
 @media (max-width: 640px) {
   html { background-color: #173f38; }
-  body { background-color: #173f38; background-image: url("assets/background-mobile.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
+  body { background-color: #173f38; background-image: url("assets/background-mobile-v2.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
   .home-shell { align-content: center; padding: 70px 16px 24px; }
   .eyebrow { top: 24px; left: 22px; }
   .welcome-panel { padding: 28px 22px; border-radius: 25px; }
@@ -139,7 +139,7 @@ html[data-deck="walk-of-faith"] #phase-selector option {
 
 @media (orientation: portrait) and (min-width: 641px) and (max-width: 900px) {
   html { background-color: #173f38; }
-  body { background-color: #173f38; background-image: url("assets/background-mobile.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
+  body { background-color: #173f38; background-image: url("assets/background-mobile-v2.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
   .home-shell { align-content: center; padding: 76px 22px 28px; }
   .welcome-panel { width: min(680px, 100%); }
   .deck-grid { grid-template-columns: 1fr; }
