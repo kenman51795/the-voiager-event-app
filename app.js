@@ -1,236 +1,172 @@
-const card = document.getElementById("card");
-const selector = document.getElementById("phase-selector");
-const timerToggle = document.getElementById("timer-toggle");
-const timerDisplay = document.getElementById("timer-display");
-const cardCounter = document.getElementById("card-counter");
-const resetBtn = document.getElementById("reset-button");
-const shuffleBtn = document.getElementById("shuffle-button");
-const backBtn = document.getElementById("back-button");
-const prevCardButton = document.getElementById("prev-card");
-
-const urlParams = new URLSearchParams(window.location.search);
-const deck = urlParams.get("deck") || "the-voiager";
-
-const uiColorMap = {
-  "the-voiager":    "#3b5549",
-  "departure":      "#444444",
-  "eternal-flame":  "#8b2e1d",
-  "curious-hearts": "#aa6c9c",
-  "inner-circle":   "#3c5d87",
-  "family-ties":    "#c77e2a",
-  "family-legacy":  "#a46b38",
-  "solitaire":      "#5c3d6b"
-};
-
 const deckConfig = {
-  "the-voiager":     { phases: ["Discovery", "Affinity", "Validity", "Final"], cardCounts: [65, 65, 65, 1] },
-  "curious-hearts":  { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "departure":       { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "eternal-flame":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "family-legacy":   { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "family-ties":     { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "inner-circle":    { phases: ["Main", "Final"], cardCounts: [52, 1] },
-  "solitaire":       { phases: ["Main", "Final"], cardCounts: [52, 1] }
+  "the-voiager": {
+    name: "The Voiager",
+    accent: "#d8bc84",
+    phases: [
+      { name: "Discovery", count: 65 },
+      { name: "Affinity", count: 65 },
+      { name: "Validity", count: 65 },
+      { name: "Final", count: 1 }
+    ]
+  },
+  "curious-hearts": {
+    name: "Curious Hearts",
+    accent: "#e1b6d5",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  }
 };
 
-function getDeckSetup(deck) {
-  return deckConfig[deck] || deckConfig["the-voiager"];
-}
+const requestedDeck = new URLSearchParams(location.search).get("deck");
+const deckKey = deckConfig[requestedDeck] ? requestedDeck : "the-voiager";
+const config = deckConfig[deckKey];
+const elements = {
+  card: document.querySelector("#card"),
+  next: document.querySelector("#next-card"),
+  selector: document.querySelector("#phase-selector"),
+  counter: document.querySelector("#card-counter"),
+  progress: document.querySelector("#progress-fill"),
+  deckName: document.querySelector("#deck-name"),
+  previous: document.querySelector("#prev-card"),
+  shuffle: document.querySelector("#shuffle-button"),
+  reset: document.querySelector("#reset-button"),
+  timer: document.querySelector("#timer-toggle"),
+  timerDisplay: document.querySelector("#timer-display"),
+  toast: document.querySelector("#toast")
+};
 
-let currentPhase = "";
-let viewedCards = {};
-let cardList = [];
-let historyStack = [];
-let timerInterval = null;
-let countdown = 240;
-let lastTap = 0;
+let phaseIndex = 0;
+let queue = [];
+let history = [];
+let seen = new Set();
+let timerId = null;
+let seconds = 240;
+let transitioning = false;
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+const shuffle = items => {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [result[i], result[j]] = [result[j], result[i]];
   }
-  return array;
+  return result;
+};
+
+function cardPath(number) {
+  const phase = config.phases[phaseIndex].name.toLowerCase();
+  return phase === "final"
+    ? `assets/${deckKey}/final/final.png`
+    : `assets/${deckKey}/${phase}/card${number}.png`;
 }
 
-function getCardList(phaseIndex) {
-  const setup = getDeckSetup(deck);
-  const phase = setup.phases[phaseIndex].toLowerCase();
-  const total = setup.cardCounts[phaseIndex];
+function rebuildQueue() {
+  const { count } = config.phases[phaseIndex];
+  queue = shuffle(Array.from({ length: count }, (_, i) => i + 1).filter(n => !seen.has(n)));
+}
 
-  if (phase === "final") {
-    return [`assets/${deck}/final/final.png`];
-  }
+function updateProgress() {
+  const total = config.phases[phaseIndex].count;
+  const current = Math.max(1, seen.size);
+  elements.counter.textContent = `${current} / ${total}`;
+  elements.progress.style.width = `${Math.min(100, current / total * 100)}%`;
+  elements.previous.disabled = history.length < 2;
+}
 
-  const cards = Array.from({ length: total }, (_, i) =>
-    `assets/${deck}/${phase}/card${i + 1}.png`
+function announce(message) {
+  elements.toast.textContent = message;
+  elements.toast.classList.add("show");
+  clearTimeout(announce.timeout);
+  announce.timeout = setTimeout(() => elements.toast.classList.remove("show"), 1800);
+}
+
+async function displayCard(src, direction = 1) {
+  if (transitioning) return;
+  transitioning = true;
+  const image = new Image();
+  image.src = src;
+  try { await image.decode(); } catch (_) {}
+  await elements.card.animate(
+    [{ opacity: 1, transform: "translateX(0) scale(1)" }, { opacity: 0, transform: `translateX(${-18 * direction}px) scale(.985)` }],
+    { duration: 150, easing: "ease-in", fill: "forwards" }
+  ).finished;
+  elements.card.src = src;
+  elements.card.animate(
+    [{ opacity: 0, transform: `translateX(${18 * direction}px) scale(.985)` }, { opacity: 1, transform: "translateX(0) scale(1)" }],
+    { duration: 280, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
   );
-
-  return shuffle(cards.filter(c => !(viewedCards[phase] || []).includes(c)));
+  transitioning = false;
 }
 
-function animateCardTransition(newSrc) {
-  const tempImg = new Image();
-  tempImg.src = newSrc;
-
-  tempImg.onload = () => {
-    // Set card invisible *before* swapping source
-    gsap.set(card, { opacity: 0 });
-
-    // Update source
-    card.src = newSrc;
-
-    // Animate in only after source is set
-    gsap.fromTo(card,
-      { opacity: 0, scale: 1.05 },
-      {
-        duration: 0.3,
-        opacity: 1,
-        scale: 1,
-        ease: "power1.out"
-      }
-    );
-  };
-}
-
-function showNextCard() {
-  const phase = currentPhase.toLowerCase();
-  if (phase === "final") {
-    animateCardTransition(`assets/${deck}/final/final.png`);
+function nextCard() {
+  if (transitioning) return;
+  if (!queue.length) {
+    announce("You’ve completed this phase");
     return;
   }
+  const number = queue.shift();
+  seen.add(number);
+  history.push(number);
+  displayCard(cardPath(number), 1);
+  updateProgress();
+}
 
-  if (cardList.length === 0) {
-    alert("All cards viewed in this phase.");
+function previousCard() {
+  if (history.length < 2 || transitioning) return;
+  const current = history.pop();
+  queue.unshift(current);
+  seen.delete(current);
+  displayCard(cardPath(history.at(-1)), -1);
+  updateProgress();
+}
+
+function loadPhase(index) {
+  phaseIndex = index;
+  seen = new Set();
+  history = [];
+  rebuildQueue();
+  nextCard();
+}
+
+function formatTime(value) {
+  return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
+}
+
+function toggleTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+    elements.timer.classList.remove("active");
+    elements.timerDisplay.textContent = "Timer";
     return;
   }
-
-  const next = cardList.shift();
-  if (!viewedCards[phase]) viewedCards[phase] = [];
-  viewedCards[phase].push(next);
-  historyStack.push(next);
-  animateCardTransition(next);
-  updateCounter();
-}
-
-function showPreviousCard() {
-  if (historyStack.length < 2) return;
-  historyStack.pop();
-  const prev = historyStack[historyStack.length - 1];
-  animateCardTransition(prev);
-  updateCounter();
-}
-
-function changePhase(index) {
-  const setup = getDeckSetup(deck);
-  currentPhase = setup.phases[index];
-  const phase = currentPhase.toLowerCase();
-  if (!viewedCards[phase]) viewedCards[phase] = [];
-  cardList = getCardList(index);
-  historyStack = [];
-  showNextCard();
-}
-
-function updateCounter() {
-  const phase = currentPhase.toLowerCase();
-  const viewed = viewedCards[phase]?.length || 0;
-  const total = getDeckSetup(deck).cardCounts[
-    getDeckSetup(deck).phases.findIndex(p => p.toLowerCase() === phase)
-  ];
-  cardCounter.textContent = `${viewed}/${total}`;
-}
-
-function updateTimerDisplay() {
-  const m = Math.floor(countdown / 60);
-  const s = countdown % 60;
-  timerDisplay.textContent = `${m}:${s.toString().padStart(2, "0")}`;
-}
-
-function startTimer() {
-  countdown = 240;
-  updateTimerDisplay();
-  timerInterval = setInterval(() => {
-    countdown--;
-    if (countdown <= 0) {
-      clearInterval(timerInterval);
-      timerDisplay.textContent = "✔";
-      setTimeout(() => (timerDisplay.textContent = ""), 3000);
-    } else {
-      updateTimerDisplay();
+  seconds = 240;
+  elements.timer.classList.add("active");
+  elements.timerDisplay.textContent = formatTime(seconds);
+  timerId = setInterval(() => {
+    seconds -= 1;
+    elements.timerDisplay.textContent = formatTime(seconds);
+    if (seconds <= 0) {
+      clearInterval(timerId);
+      timerId = null;
+      elements.timer.classList.remove("active");
+      elements.timerDisplay.textContent = "Done";
+      announce("Time’s up");
     }
   }, 1000);
 }
 
-timerToggle?.addEventListener("click", () => {
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerDisplay.textContent = "";
-    timerInterval = null;
-  } else {
-    startTimer();
-  }
+elements.deckName.textContent = config.name;
+document.documentElement.style.setProperty("--accent", config.accent);
+config.phases.forEach((phase, index) => {
+  elements.selector.add(new Option(phase.name, index));
 });
-
-resetBtn?.addEventListener("click", () => {
-  const phase = currentPhase.toLowerCase();
-  viewedCards[phase] = [];
-  cardList = getCardList(selector.selectedIndex);
-  historyStack = [];
-  showNextCard();
+elements.selector.addEventListener("change", event => loadPhase(Number(event.target.value)));
+elements.next.addEventListener("click", nextCard);
+elements.previous.addEventListener("click", previousCard);
+elements.shuffle.addEventListener("click", () => { queue = shuffle(queue); announce("Cards shuffled"); });
+elements.reset.addEventListener("click", () => { loadPhase(phaseIndex); announce("Phase restarted"); });
+elements.timer.addEventListener("click", toggleTimer);
+document.addEventListener("keydown", event => {
+  if (["ArrowRight", " ", "Enter"].includes(event.key)) { event.preventDefault(); nextCard(); }
+  if (event.key === "ArrowLeft") previousCard();
 });
-
-shuffleBtn?.addEventListener("click", () => {
-  cardList = shuffle(cardList);
-});
-
-backBtn?.addEventListener("click", () => {
-  window.location.href = "index.html";
-});
-
-prevCardButton?.addEventListener("click", showPreviousCard);
-
-function handleCardTap() {
-  const now = new Date().getTime();
-  if (now - lastTap < 300) return;
-  lastTap = now;
-  showNextCard();
-}
-
-if ("ontouchstart" in window) {
-  card?.addEventListener("touchend", handleCardTap);
-} else {
-  card?.addEventListener("click", handleCardTap);
-}
-
-function init() {
-  const setup = getDeckSetup(deck);
-
-  setup.phases.forEach((phase, i) => {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = phase;
-    selector.appendChild(opt);
-  });
-
-  const iconColor = uiColorMap[deck] || "#ffffff";
-
-  selector.style.color = iconColor;
-  timerDisplay.style.color = iconColor;
-  cardCounter.style.color = iconColor;
-
-  [resetBtn, shuffleBtn, timerToggle, prevCardButton, backBtn].forEach(btn => {
-    if (btn) btn.style.color = iconColor;
-  });
-
-  selector.addEventListener("change", e => {
-    changePhase(Number(e.target.value));
-  });
-
-  changePhase(0);
-}
-
-// ✅ Final load event
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
-  init();
-});
+loadPhase(0);

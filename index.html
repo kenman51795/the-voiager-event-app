@@ -1,29 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#000000"/>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173f38">
   <title>The Voiager</title>
-
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="home-screen">
-  <div class="deck-selection">
-    <button class="deck-button the-voiager" onclick="location.href='game.html?deck=the-voiager'">The Voiager</button>
-    <button class="deck-button departure" onclick="location.href='game.html?deck=departure'">The Departure Deck</button>
-    <button class="deck-button eternal-flame" onclick="location.href='game.html?deck=eternal-flame'">The Eternal Flame Deck</button>
-    <button class="deck-button curious-hearts" onclick="location.href='game.html?deck=curious-hearts'">The Curious Hearts Deck</button>
-    <button class="deck-button inner-circle" onclick="location.href='game.html?deck=inner-circle'">The Inner Circle Deck</button>
-    <button class="deck-button family-ties" onclick="location.href='game.html?deck=family-ties'">The Family Ties Deck</button>
-    <button class="deck-button family-legacy" onclick="location.href='game.html?deck=family-legacy'">The Family Legacy Deck</button>
-    <button class="deck-button solitaire" onclick="location.href='game.html?deck=solitaire'">The Solitaire Deck</button>
-  </div>
-
-  <a id="footer-link" href="https://linktr.ee/thevoiager" target="_blank">@TheVoiager</a>
+<body class="home">
+  <main class="home-shell">
+    <div class="eyebrow">A conversation card experience</div>
+    <section class="welcome-panel" aria-labelledby="welcome-title">
+      <p class="kicker">Choose your journey</p>
+      <h1 id="welcome-title">Go beyond small talk.</h1>
+      <p class="intro">Pick a deck, gather your people, and let each card take the conversation somewhere new.</p>
+      <div class="deck-grid">
+        <a class="deck-tile voiager" href="game.html?deck=the-voiager">
+          <span class="deck-number">01</span>
+          <span><strong>The Voiager</strong><small>195 prompts · 4 phases</small></span>
+          <span class="deck-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="deck-tile hearts" href="game.html?deck=curious-hearts">
+          <span class="deck-number">02</span>
+          <span><strong>Curious Hearts</strong><small>51 prompts · 2 phases</small></span>
+          <span class="deck-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <p class="availability">More journeys coming soon.</p>
+    </section>
+    <a class="brand-link" href="https://linktr.ee/thevoiager" target="_blank" rel="noreferrer">@TheVoiager ↗</a>
+  </main>
 </body>
 </html>

@@ -1,41 +1,45 @@
-<!DOCTYPE html> 
+<!doctype html>
 <html lang="en">
-  <script>
-    if (!document.cookie.includes("eventapp_auth=grwthruothers")) {
-      window.location.href = "login.html";
-    }
-  </script>
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>The Voiager Game</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="app.js" defer></script>
-  </head>
-
-  <body class="game-screen">
-    <div id="header">
-      <div class="header-left">
-        <button id="back-button">←</button>
-        <select id="phase-selector"></select>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173f38">
+  <title>The Voiager — Play</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="game">
+  <main class="game-shell">
+    <header class="topbar">
+      <a class="icon-button back" href="index.html" aria-label="Back to decks">←</a>
+      <div class="journey-meta">
+        <span id="deck-name">The Voiager</span>
+        <label>
+          <span class="sr-only">Choose a phase</span>
+          <select id="phase-selector"></select>
+        </label>
       </div>
-      <div class="header-right controls" id="mobile-controls">
-        <button id="prev-card" title="Go Back One Card">⬅️</button>
-        <button id="shuffle-button">🔀</button>
-        <button id="reset-button">🔁</button>
-        <button id="timer-toggle">⏱ <span id="timer-display"></span></button>
-        <span id="card-counter">0</span>
+      <div class="progress" aria-label="Card progress">
+        <span id="card-counter">1 / 65</span>
+        <span class="progress-track"><span id="progress-fill"></span></span>
       </div>
-    </div>
+    </header>
 
-    <div id="card-container">
-      <img id="card" src="" alt="Card" />
-    </div>
+    <section class="card-stage" aria-live="polite">
+      <button class="card-button" id="next-card" aria-label="Show next card">
+        <img id="card" src="" alt="Conversation prompt">
+        <span class="tap-hint">Tap for the next card</span>
+      </button>
+    </section>
 
-    <a id="footer-link" href="https://linktr.ee/thevoiager" target="_blank">@TheVoiager</a>
-  </body>
+    <nav class="control-dock" aria-label="Game controls">
+      <button id="prev-card" type="button"><span aria-hidden="true">←</span><small>Previous</small></button>
+      <button id="shuffle-button" type="button"><span aria-hidden="true">⤨</span><small>Shuffle</small></button>
+      <button id="timer-toggle" type="button"><span id="timer-icon" aria-hidden="true">◷</span><small id="timer-display">Timer</small></button>
+      <button id="reset-button" type="button"><span aria-hidden="true">↻</span><small>Restart</small></button>
+    </nav>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
 </html>
