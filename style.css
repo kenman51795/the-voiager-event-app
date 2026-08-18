@@ -195,7 +195,7 @@ html[data-deck="walk-of-faith"] #phase-selector option {
   .game-shell {
     height: 100svh;
     min-height: 0;
-    grid-template-rows: 42px minmax(0, 1fr) 48px;
+    grid-template-rows: 42px minmax(0, 1fr) 42px;
     gap: 9px;
     padding: max(6px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
@@ -205,13 +205,13 @@ html[data-deck="walk-of-faith"] #phase-selector option {
   .journey-pill #deck-name { font-size: .82rem; }
   .journey-pill .pill-divider { height: 18px; }
   #phase-selector { max-width: 118px; padding: 5px 23px 5px 8px; font-size: .8rem; }
-  .card-stage { min-height: 0; padding: 54px 0 10px; }
+  .card-stage { min-height: 0; padding: 52px 0 8px; }
   .card-button { min-height: 0; height: 100%; }
-  #card { max-height: calc(100svh - 172px); max-width: min(56vw, 520px); border-radius: 16px; }
-  .control-dock { align-self: end; padding: 4px; gap: 2px; border-radius: 17px; }
-  .control-dock button { min-width: 62px; padding: 5px 9px; gap: 2px; }
-  .control-dock button > span { font-size: 1rem; }
-  .control-dock button small { font-size: .6rem; }
+  #card { max-height: calc(100svh - 150px); max-width: min(60vw, 550px); border-radius: 16px; }
+  .control-dock { align-self: end; padding: 3px; gap: 1px; border-radius: 15px; }
+  .control-dock button { min-width: 58px; padding: 3px 8px; gap: 1px; }
+  .control-dock button > span { font-size: .92rem; }
+  .control-dock button small { font-size: .56rem; }
   .tap-hint { display: none; }
   #toast { top: 8px; }
 }
