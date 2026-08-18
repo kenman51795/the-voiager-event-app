@@ -153,16 +153,31 @@ html[data-deck="walk-of-faith"] #phase-selector option {
 }
 
 @media (orientation: portrait) and (max-width: 900px) {
-  html, body { min-height: 100dvh; background-color: #173f38; }
-  body { position: relative; isolation: isolate; background-image: none; }
+  html {
+    min-height: 100vh;
+    min-height: 100lvh;
+    background: #173f38 url("assets/background-mobile-v2.png") center top / cover no-repeat;
+  }
+  body {
+    min-height: 100vh;
+    min-height: 100lvh;
+    position: relative;
+    isolation: isolate;
+    background-color: transparent;
+    background-image: none;
+    overscroll-behavior-y: none;
+  }
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -2;
     width: 100vw;
-    height: 100dvh;
+    height: 100vh;
+    height: 100lvh;
     background: #173f38 url("assets/background-mobile-v2.png") center top / cover no-repeat;
+    transform: translateZ(0);
+    will-change: transform;
     pointer-events: none;
   }
 }
