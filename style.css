@@ -69,6 +69,16 @@ h1 { margin: 0; max-width: 700px; font-size: clamp(2.75rem, 5vw, 4.8rem); font-w
 .journey-pill #deck-name { color: var(--accent); }
 html[data-deck="walk-of-faith"] .journey-pill,
 html[data-deck="walk-of-faith"] .game-header .back { background: color-mix(in srgb, var(--deck-color) 18%, transparent); text-shadow: 0 1px 3px rgba(37,43,34,.78); }
+html[data-deck="walk-of-faith"] #phase-selector {
+  color: var(--accent);
+  background-color: color-mix(in srgb, var(--deck-color) 18%, #39443d);
+  border-color: color-mix(in srgb, var(--accent), transparent 50%);
+  text-shadow: 0 1px 2px rgba(20,25,21,.72);
+}
+html[data-deck="walk-of-faith"] #phase-selector option {
+  color: var(--accent);
+  background-color: #4a5048;
+}
 .pill-divider { width: 1px; height: 22px; background: rgba(255,255,255,.17); }
 .icon-button { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; color: inherit; text-decoration: none; font: 400 1.35rem/1 system-ui, sans-serif; transition: background .2s ease; }
 .icon-button:hover { background: rgba(255,255,255,.1); }
