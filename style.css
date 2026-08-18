@@ -106,7 +106,8 @@ html[data-deck="walk-of-faith"] #phase-selector option {
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 640px) {
-  body { background-color: #b28d52; background-image: url("assets/background-mobile.png"); background-size: 100% auto; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
+  html { background-color: #173f38; }
+  body { background-color: #173f38; background-image: url("assets/background-mobile.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
   .home-shell { align-content: center; padding: 70px 16px 24px; }
   .eyebrow { top: 24px; left: 22px; }
   .welcome-panel { padding: 28px 22px; border-radius: 25px; }
@@ -118,31 +119,37 @@ html[data-deck="walk-of-faith"] #phase-selector option {
   .login-panel { padding: 32px 23px; border-radius: 25px; }
   .password-row { grid-template-columns: 1fr; }
   .password-row button { min-height: 50px; }
-  .game-shell { gap: 14px; padding-inline: 10px; }
-  .game-header { justify-items: end; min-height: 48px; transform: translateY(82px); }
+  .game-shell { gap: 7px; padding-inline: 10px; }
+  .game-header { justify-items: end; min-height: 42px; transform: translateY(76px); }
   .game-header .back { left: 0; }
-  .journey-pill { max-width: calc(100% - 56px); min-height: 44px; gap: 8px; padding: 4px 7px 4px 11px; }
+  .game-header .back { width: 38px; height: 38px; }
+  .journey-pill { max-width: calc(100% - 50px); min-height: 40px; gap: 6px; padding: 3px 6px 3px 10px; }
   .journey-meta { justify-content: flex-end; gap: 7px; min-width: 0; }
-  #deck-name { overflow: hidden; text-overflow: ellipsis; }
+  #deck-name { overflow: hidden; text-overflow: ellipsis; font-size: .86rem; }
+  #phase-selector { max-width: 124px; padding: 6px 25px 6px 9px; font-size: .86rem; }
   .progress { flex: 0 0 auto; padding: 0 5px 0 0; }
-  .card-stage { padding: 64px 0 18px; }
-  #card { max-width: 94vw; max-height: calc(100svh - 320px); border-radius: 18px; }
-  .control-dock { width: 100%; max-width: 430px; gap: 2px; padding: 5px; margin-top: 4px; }
-  .control-dock button { min-width: 0; padding-inline: 8px; }
+  .card-stage { padding: 54px 0 8px; }
+  #card { max-width: 96vw; max-height: calc(100svh - 260px); border-radius: 18px; }
+  .control-dock { width: min(94%, 390px); gap: 1px; padding: 4px; margin-top: 0; border-radius: 17px; }
+  .control-dock button { min-width: 0; padding: 6px 7px; gap: 2px; }
+  .control-dock button > span { font-size: 1.05rem; }
+  .control-dock button small { font-size: .61rem; }
   .tap-hint { display: none; }
 }
 
 @media (orientation: portrait) and (min-width: 641px) and (max-width: 900px) {
-  body { background-color: #b28d52; background-image: url("assets/background-mobile.png"); background-size: 100% auto; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
+  html { background-color: #173f38; }
+  body { background-color: #173f38; background-image: url("assets/background-mobile.png"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; }
   .home-shell { align-content: center; padding: 76px 22px 28px; }
   .welcome-panel { width: min(680px, 100%); }
   .deck-grid { grid-template-columns: 1fr; }
   .brand-link { display: none; }
-  .game-shell { gap: 14px; padding-inline: 14px; }
-  .game-header { transform: translateY(92px); }
-  .card-stage { padding: 72px 0 20px; }
-  #card { max-width: 94vw; max-height: calc(100svh - 330px); }
-  .control-dock { margin-top: 4px; }
+  .game-shell { gap: 8px; padding-inline: 14px; }
+  .game-header { transform: translateY(84px); }
+  .journey-pill { min-height: 42px; padding-block: 4px; }
+  .card-stage { padding: 60px 0 10px; }
+  #card { max-width: 96vw; max-height: calc(100svh - 275px); }
+  .control-dock { margin-top: 0; }
 }
 
 @media (orientation: landscape) and (max-height: 600px) {
@@ -163,8 +170,10 @@ html[data-deck="walk-of-faith"] #phase-selector option {
   }
   .game-header { min-height: 42px; transform: translateY(54px); }
   .game-header .back { width: 38px; height: 38px; }
-  .journey-pill { min-height: 40px; max-width: calc(100% - 92px); padding: 3px 7px 3px 12px; gap: 8px; }
-  #phase-selector { padding-block: 6px; }
+  .journey-pill { min-height: 36px; max-width: calc(100% - 92px); padding: 2px 6px 2px 10px; gap: 6px; }
+  .journey-pill #deck-name { font-size: .82rem; }
+  .journey-pill .pill-divider { height: 18px; }
+  #phase-selector { max-width: 118px; padding: 5px 23px 5px 8px; font-size: .8rem; }
   .card-stage { min-height: 0; padding: 54px 0 10px; }
   .card-button { min-height: 0; height: 100%; }
   #card { max-height: calc(100svh - 172px); max-width: min(56vw, 520px); border-radius: 16px; }
