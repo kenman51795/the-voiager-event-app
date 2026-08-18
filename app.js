@@ -13,6 +13,36 @@ const deckConfig = {
     name: "Curious Hearts",
     accent: "#e1b6d5",
     phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "departure": {
+    name: "Departure",
+    accent: "#b9b9b9",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "eternal-flame": {
+    name: "Eternal Flame",
+    accent: "#f2c572",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "family-legacy": {
+    name: "Family Legacy",
+    accent: "#e5cdb3",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "family-ties": {
+    name: "Family Ties",
+    accent: "#f6e3c5",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "inner-circle": {
+    name: "Inner Circle",
+    accent: "#c8d7e1",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
+  },
+  "walk-of-faith": {
+    name: "Walk of Faith",
+    accent: "#ede8d9",
+    phases: [{ name: "Main", count: 51 }, { name: "Final", count: 1 }]
   }
 };
 
@@ -71,6 +101,12 @@ function updateProgress() {
   elements.previous.disabled = history.length < 2;
 }
 
+function preloadNextCard() {
+  if (!queue.length) return;
+  const image = new Image();
+  image.src = cardPath(queue[0]);
+}
+
 function announce(message) {
   elements.toast.textContent = message;
   elements.toast.classList.add("show");
@@ -105,7 +141,7 @@ function nextCard() {
   const number = queue.shift();
   seen.add(number);
   history.push(number);
-  displayCard(cardPath(number), 1);
+  displayCard(cardPath(number), 1).then(preloadNextCard);
   updateProgress();
 }
 
