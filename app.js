@@ -125,17 +125,25 @@ function announce(message) {
 async function displayCard(src, direction = 1) {
   if (transitioning) return;
   transitioning = true;
+  const hasCurrentCard = Boolean(elements.card.getAttribute("src"));
   const image = new Image();
   image.src = src;
   try { await image.decode(); } catch (_) {}
-  await elements.card.animate(
-    [{ opacity: 1, transform: "translateX(0) scale(1)" }, { opacity: 0, transform: `translateX(${-18 * direction}px) scale(.985)` }],
-    { duration: 150, easing: "ease-in", fill: "forwards" }
-  ).finished;
+
+  if (hasCurrentCard) {
+    await elements.card.animate(
+      [{ opacity: 1, transform: "translateX(0) scale(1)" }, { opacity: 0, transform: `translateX(${-18 * direction}px) scale(.985)` }],
+      { duration: 150, easing: "ease-in", fill: "forwards" }
+    ).finished;
+  }
+
   elements.card.src = src;
+  elements.card.alt = `${config.name} conversation prompt`;
   elements.card.animate(
-    [{ opacity: 0, transform: `translateX(${18 * direction}px) scale(.985)` }, { opacity: 1, transform: "translateX(0) scale(1)" }],
-    { duration: 280, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+    hasCurrentCard
+      ? [{ opacity: 0, transform: `translateX(${18 * direction}px) scale(.985)` }, { opacity: 1, transform: "translateX(0) scale(1)" }]
+      : [{ opacity: 0, transform: "scale(.99)" }, { opacity: 1, transform: "scale(1)" }],
+    { duration: hasCurrentCard ? 280 : 220, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
   );
   transitioning = false;
 }
