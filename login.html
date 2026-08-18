@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173f38">
+  <title>Enter Password — The Voiager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login">
+  <main class="login-shell">
+    <section class="login-panel" aria-labelledby="login-title">
+      <p class="kicker">The Voiager</p>
+      <h1 id="login-title">Welcome to the journey.</h1>
+      <p class="login-intro">Enter the event password to open the conversation decks.</p>
+      <form id="login-form" novalidate>
+        <label for="password">Access password</label>
+        <div class="password-row">
+          <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" required autofocus>
+          <button type="submit">Enter <span aria-hidden="true">→</span></button>
+        </div>
+        <p class="error" id="error-message" role="alert" aria-live="polite"></p>
+      </form>
+    </section>
+    <a class="brand-link" href="https://linktr.ee/thevoiager" target="_blank" rel="noreferrer">@TheVoiager ↗</a>
+  </main>
+  <script>
+    const PASSWORD = "grwthruothers";
+    const cookie = `eventapp_auth=${PASSWORD}`;
+    const params = new URLSearchParams(location.search);
+    const requestedPage = params.get("next");
+    const destination = requestedPage && !requestedPage.includes(":") && !requestedPage.startsWith("//")
+      ? requestedPage
+      : "index.html";
+
+    if (document.cookie.split("; ").includes(cookie)) {
+      location.replace(destination);
+    }
+
+    document.querySelector("#login-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const input = document.querySelector("#password");
+      const error = document.querySelector("#error-message");
+
+      if (input.value === PASSWORD) {
+        document.cookie = `${cookie}; path=/; SameSite=Lax`;
+        location.replace(destination);
+      } else {
+        error.textContent = "That password doesn’t match. Please try again.";
+        input.setAttribute("aria-invalid", "true");
+        input.select();
+      }
+    });
+  </script>
+</body>
+</html>
