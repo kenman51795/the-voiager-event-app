@@ -11,13 +11,13 @@
   <main class="login-shell">
     <section class="login-panel" aria-labelledby="login-title">
       <p class="kicker">The Voiager</p>
-      <h1 id="login-title">Welcome to the journey.</h1>
-      <p class="login-intro">Enter the event password to open the conversation decks.</p>
+      <h1 id="login-title">You know the way in.</h1>
+      <p class="login-intro">One little password, then let the conversations begin.</p>
       <form id="login-form" novalidate>
-        <label for="password">Access password</label>
+        <label for="password">Password</label>
         <div class="password-row">
           <input type="password" id="password" name="password" placeholder="Enter password" autocomplete="current-password" required autofocus>
-          <button type="submit">Enter <span aria-hidden="true">→</span></button>
+          <button type="submit">Let me in <span aria-hidden="true">→</span></button>
         </div>
         <p class="error" id="error-message" role="alert" aria-live="polite"></p>
       </form>
@@ -46,7 +46,7 @@
         document.cookie = `${cookie}; path=/; SameSite=Lax`;
         location.replace(destination);
       } else {
-        error.textContent = "That password doesn’t match. Please try again.";
+        error.textContent = "Nope—that’s not it. Give it another try.";
         input.setAttribute("aria-invalid", "true");
         input.select();
       }
