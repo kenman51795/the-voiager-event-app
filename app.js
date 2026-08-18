@@ -209,6 +209,7 @@ function toggleTimer() {
 elements.deckName.textContent = config.name;
 document.documentElement.style.setProperty("--accent", config.accent);
 document.documentElement.style.setProperty("--deck-color", config.color);
+document.documentElement.dataset.deck = deckKey;
 config.phases.forEach((phase, index) => {
   elements.selector.add(new Option(phase.name, index));
 });
